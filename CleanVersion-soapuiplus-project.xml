@@ -1,0 +1,1009 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="cb681a6e-93a1-441c-a969-0caab846c5c5" activeEnvironment="Default" name="CleanVersion" resourceRoot="" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" encryptionMode="Not encrypted" updated="2.6.0 2019-01-14T14:47:06Z" xmlns:con="http://eviware.com/soapui/config"><con:description>SoapUIplus version - 2.6.2</con:description><con:settings/><con:testSuite id="2f5d8a07-6b28-4d06-9973-023fc1118020" name="Runner"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="c7f1f636-23aa-4597-815a-952ae1a4dca0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Runner" searchProperties="true"><con:settings/><con:testStep type="properties" name="DataSources" id="7c0ad800-6d4c-4ff2-b367-4d37fedbf56f"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>DSInput</con:name><con:value>DS_envConfig</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="DSLooper" id="68c92ecc-1b5a-462d-b5c5-a08db25e7a42"><con:settings/><con:config><script>//DSLooper
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@Looper"].testSteps["@DSLooper"].run(testRunner, context);
+return;</script></con:config></con:testStep><con:testStep type="properties" name="LooperProps" id="31fb292a-2bdb-474a-bf6d-a7189e2e7f0e"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>RowsCount</con:name><con:value>2</con:value></con:property><con:property><con:name>ActualRow</con:name><con:value>1</con:value></con:property><con:property><con:name>NextRow</con:name><con:value>2</con:value></con:property><con:property><con:name>StopLoop</con:name><con:value>StopLoop</con:value></con:property><con:property><con:name>LoopsCount</con:name><con:value>0</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="InputProps" id="bf673cf9-ab35-4d54-9bef-e1c5299143ed"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>env2test</con:name><con:value>TEST</con:value></con:property><con:property><con:name>host</con:name><con:value>https://test.cz</con:value></con:property><con:property><con:name>measurement</con:name><con:value>test_v01</con:value></con:property><con:property><con:name>app</con:name><con:value>test</con:value></con:property><con:property><con:name>browserPath</con:name><con:value>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</con:value></con:property><con:property><con:name>sendMetrics</con:name><con:value>false</con:value></con:property><con:property><con:name>telegrafUrl</con:name><con:value>https://qatick.clance.local/telegraf</con:value></con:property><con:property><con:name>test</con:name><con:value>test</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="Runner" id="f90ce74f-5671-4621-b36c-e5b98856c9eb"><con:settings/><con:config><script>//cleanUp project props
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@CleanUp"].testSteps["@CleanUpProjectProps"].run(testRunner, context);
+//get testRunId for test
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@GetData"].testSteps["@GetTestRunId"].run(testRunner, context);
+
+//get ds values and set as project props
+def inputProps = testRunner.testCase.testSteps["InputProps"];
+
+for (prop in inputProps.getPropertyList()) {
+
+	def propName = prop.getName();
+	def propVal = prop.getValue();
+	testRunner.testCase.testSuite.project.setPropertyValue(propName, propVal);
+}
+
+//run testSuite Execution
+def project = testRunner.testCase.testSuite.project;
+def runner = project.testSuites['Execution'].run(null, true);
+
+runner.waitUntilFinished();</script></con:config></con:testStep><con:testStep type="groovy" name="DSLoop" id="dbbbc614-8c7c-4396-b6b9-23774fcbbb1c"><con:settings/><con:config><script>//DSLoop
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@Looper"].testSteps["@DSLoop"].run(testRunner, context);
+return;</script></con:config></con:testStep><con:setupScript>//cleanUp InputProps
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@CleanUp"].testSteps["@CleanUpInputProps"].run(testRunner, context);
+</con:setupScript><con:properties><con:property><con:name>DSPath</con:name><con:value>D:\01_WORK\01_Actual_work\01_CLV\01_Projects\01_CAT\01_clv.cat.soapuiplus/01_DataSources/DS_envConfig.xls</con:value></con:property><con:property><con:name>nextRow</con:name><con:value>1</con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:setupScript/><con:reportParameters/></con:testSuite><con:testSuite id="19d6a1d0-9797-4d44-882b-b5707ca7c103" name="@Utils" disabled="true"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="e6f977c2-cf61-446d-8193-9ca84881ba08" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="@Looper" searchProperties="true"><con:settings/><con:testStep type="groovy" name="@DSLooper" id="2fb84233-acd4-4c83-a37f-91d43bb38836"><con:settings/><con:config><script>import com.eviware.soapui.support.XmlHolder;
+import jxl.*;
+import jxl.write.*;
+
+def projRoot = context.expand('${projectDir}');
+def env2test = context.expand('${#Project#env2test}');
+def DS = testRunner.testCase.testSteps['DataSources'].getPropertyValue("DSInput");
+def DSPath;
+
+if (DS.startsWith("DS_envConfig")) {
+
+	DSPath = projRoot + "/01_DataSources/" + DS + ".xls";
+	testRunner.testCase.setPropertyValue("DSPath", DSPath);
+}
+else {
+
+	DSPath = projRoot + "/01_DataSources/" + DS + "_" + env2test + ".xls";
+	testRunner.testCase.setPropertyValue("DSPath", DSPath);
+}
+
+def Workbook wb = Workbook.getWorkbook(new File(DSPath));
+def Sheet sh = wb.getSheet(0);
+
+def rowsCount= sh.getRows().toInteger();
+def colsCount = sh.getColumns().toInteger();
+
+if(rowsCount == 1) {
+	
+	testRunner.fail("DataSource is empty");
+	log.info "DataSource is empty - testCase run was canceled";
+}
+else {
+
+	def inputProps = testRunner.testCase.getTestStepByName("InputProps");
+	def looperProps = testRunner.testCase.getTestStepByName("LooperProps");
+	looperProps.setPropertyValue("RowsCount", rowsCount.toString());
+	actualRow = looperProps.getPropertyValue("ActualRow").toString();
+	actualRow = actualRow.toInteger();
+	
+	def nextRow;
+	if(actualRow > rowsCount-2 ) {
+			
+		nextRow = "1";
+		testRunner.testCase.setPropertyValue("nextRow", nextRow);
+	}
+	else {
+			
+		nextRow = actualRow + 1;
+		nextRow = nextRow.toString();
+		testRunner.testCase.setPropertyValue("nextRow", nextRow);
+	}
+	
+	nextRow = context.expand('${#TestCase#nextRow}');
+
+	int i = 1;
+	for(int j = 0; j &lt; colsCount; j++) {
+
+		headerCol = i.toString();
+		//log.info headerCol;
+		Cell headerCol = sh.getCell(j,0);
+		header = headerCol.getContents();
+		Cell cell = sh.getCell(j, actualRow);
+		field = cell.getContents();
+		inputProps.setPropertyValue(header, field);
+		i++
+	}
+	
+	wb.close();
+
+	looperProps.setPropertyValue("ActualRow", nextRow.toString());
+	nextRow++;
+	log.info "DataSource = " + DS + ", actual row = ${(actualRow)} of ${(rowsCount)-1}";
+ 	log.info "*******************************************************************************************************************";	
+	looperProps.setPropertyValue("NextRow", nextRow.toString());
+	//looperProps.setPropertyValue("LoopsCount", nextRow.toString());
+	
+	if (actualRow == rowsCount-1) {
+	
+		looperProps.setPropertyValue("StopLoop", "StopLoop");
+	}
+	else if (actualRow==0) {
+		
+		def runner = new com.eviware.soapui.impl.wsdl.testcase.WsdlTestCaseRunner(testRunner.testCase, null);
+		looperProps.setPropertyValue("StopLoop", "NextLoop");
+	}
+	else {
+	
+		looperProps.setPropertyValue("StopLoop", "NextLoop");
+	}
+}</script></con:config></con:testStep><con:testStep type="groovy" name="@DSLoop" id="c885ccba-d014-4295-a954-987ec91ff172"><con:settings/><con:config><script>def looperProps = testRunner.testCase.getTestStepByName("LooperProps");
+def stopLoop = looperProps.getPropertyValue("StopLoop");
+ 
+if (stopLoop.toString() == "StopLoop") {
+
+	log.info ("End of rows  in dataSource - stop loop");
+	log.info "******************************************************************************************************************";
+}
+else {
+
+	testRunner.gotoStepByName("DSLooper");
+}</script></con:config></con:testStep><con:tearDownScript/><con:properties/><con:reportParameters/></con:testCase><con:testCase id="a621b0f2-300b-40a7-b176-3807308fc7df" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="@Evaluation" searchProperties="true"><con:settings/><con:testStep type="groovy" name="@Evaluation" id="b0dbde74-f74a-458d-9480-a01aa1772dfb"><con:settings/><con:config><script>import org.apache.commons.io.FileUtils;
+
+//get project root path
+def projRoot = context.expand('${projectDir}');
+
+//get actual environment
+def env2test = context.expand('${#Project#env2test}');
+
+//get call execution dateTime
+def reqExecDateTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:SS").format(new Date());
+log.info "reqExecDateTime = " + reqExecDateTime;
+
+//get call step name
+def stepName = testRunner.testCase.getTestStepAt(context.getCurrentStepIndex()).getLabel();
+log.info "stepName = " + stepName;
+
+def reqCorrelationId = context.expand('${#TestCase#reqCorrelationId}');
+log.info "reqCorrelationId = " + reqCorrelationId;
+
+//create folder for req/rsp if not exist
+File directory = new File(projRoot + "/03_Requests_Responses/" + env2test);
+if (!directory.exists()) {
+
+	directory.mkdir();	
+}
+
+def response = context.expand( '${${#TestCase#stepName}#Response}' );
+def rspStatusCode;
+//get random string as file unique identificator
+def randStr = org.apache.commons.lang.RandomStringUtils.random(10, true, true);
+testRunner.testCase.setPropertyValue("randStr", randStr);
+def rspTimeTaken;
+
+if (!response.isEmpty()) {
+
+	//get response http status code
+	def rspStatus = context.testCase.testSteps[stepName].testRequest.response.responseHeaders["#status#"];
+	rspStatusCode = (rspStatus =~ "[1-5]\\d\\d")[0];
+	testRunner.testCase.setPropertyValue("rspStatusCode", rspStatusCode);
+	log.info "rspStatusCode = " + rspStatusCode;
+	
+	//get response time
+	rspTimeTaken = testRunner.testCase.testSteps[stepName].testRequest.response.timeTaken;
+	log.info "rspTimeTaken = " + rspTimeTaken + "ms";
+	
+	//get raw request/response and create as txt file
+	if(!rspStatusCode.startsWith("20")) {
+	
+		//get time dateTime for req/rsp name prefix
+		def reqExecDateTimeForFileName = new java.text.SimpleDateFormat("yyyyMMdd_HHmmSS").format(new Date());
+	
+		//get time testVariantId for req/rsp name prefix
+		def testVariantId = context.expand('${InputProps#testVariantId}')
+		
+		//get call url and method
+		def method = context.testCase.testSteps[stepName].getHttpRequest().getMethod().toString();
+		def url = context.testCase.testSteps[stepName].getHttpRequest().getEndpoint().toString()
+		
+		//get request headers
+		def requestHeaders = context.testCase.testSteps[stepName].getHttpRequest().messageExchange.getRequestHeaders().toString()
+		//get request
+		def request = context.expand( '${${#TestCase#stepName}#Request}' );
+		//create rawRequest
+		def rawRequest = method + " " + url + "\r\n\r\n" + requestHeaders + "\r\n" + request;
+		testRunner.testCase.setPropertyValue("rawRequest", rawRequest);
+	
+		//get response headers
+		def responseHeaders = context.testCase.testSteps[stepName].testRequest.response.responseHeaders.toString();
+		//get response
+		response = context.expand( '${${#TestCase#stepName}#Response}' );
+		log.info response;
+		//create rawResponse
+		def rawResponse = responseHeaders + "\r\n" + response;
+		testRunner.testCase.setPropertyValue("rawResponse", rawResponse);
+	
+		//create raw req/rsp property 
+		def reqRspRaw = "ExecDateTime = " + reqExecDateTimeForFileName + "\r\n\r\n" + "RAW REQUEST" + "\r\n\r\n" + rawRequest + 
+	
+		"\r\n\r\n" + 
+		"=================================================================================================================================================================================" +
+		"\r\n\r\n" + 
+		"RAW RESPONSE" + "\r\n\r\n" + rawResponse;
+	
+		//create file with raw req/rsp
+		def reqRspRawFile = new File(projRoot + "/03_Requests_Responses/" + env2test + "/" + stepName + "_req_rsp" + "(" + randStr + ").txt").write(reqRspRaw);
+	}
+}
+else {
+
+	log.info "rspStatusCode is not available - set Timmed out";
+	testRunner.testCase.setPropertyValue("rspStatusCode", "TimedOut");
+
+	//get time dateTime for req/rsp name prefix
+	def reqExecDateTimeForFileName = new java.text.SimpleDateFormat("yyyyMMdd_HHmmSS").format(new Date());
+
+	//get time testVariantId for req/rsp name prefix
+	def testVariantId = context.expand('${InputProps#testVariantId}')
+
+	//get call url and method
+	def method = context.testCase.testSteps[stepName].getHttpRequest().getMethod().toString();
+	def url = context.testCase.testSteps[stepName].getHttpRequest().getEndpoint().toString()
+	
+	//get request headers
+	def requestHeaders = context.testCase.testSteps[stepName].getHttpRequest().getRequestHeaders().toString()
+	//get request
+	def request = context.expand( '${${#TestCase#stepName}#Request}' );
+	//create rawRequest
+	def rawRequest = method + " " + url + "\r\n\r\n" + requestHeaders + "\r\n" + request;
+	testRunner.testCase.setPropertyValue("rawRequest", rawRequest);
+
+	//create raw req/rsp property 
+	def reqRspRaw = "ExecDateTime = " + reqExecDateTimeForFileName + "\r\n\r\n" + "RAW REQUEST" + "\r\n\r\n" + rawRequest + 
+
+	"\r\n\r\n" + 
+	"=================================================================================================================================================================================" +
+	"\r\n\r\n" + 
+	"RAW RESPONSE" + "\r\n\r\n" + "Not available due to time out";
+
+	//create file with raw req/rsp
+	def reqRspRawFile = new File(projRoot + "/03_Requests_Responses/" + env2test + "/" + stepName + "_req_rsp" + "(" + randStr + ").txt").write(reqRspRaw);
+}
+
+//check assertion status
+testRunner.testCase.setPropertyValue("rspAssertsStatus", "1");
+
+obj = context.testCase.getTestStepByName(stepName);
+assertions = obj.getAssertionList();
+assertions.each { 
+      
+	log.info(it.name + " - " + it.status);
+	status = (it.status).toString();
+
+	//assert status is failed or unknown set assert status as failed
+	if(status.startsWith("FAIL")) {
+	
+		log.info "ASSERTS FAILED";
+		testRunner.testCase.setPropertyValue("rspAssertsStatus", "-1");
+	}
+}
+
+//def metrics tags and fields 
+def metric = context.expand('${#Project#measurement}');
+def app = context.expand('${#Project#app}');
+def endpoint = context.expand('${${#TestCase#stepName}#Endpoint}');
+def String host = endpoint.split("/")[2];
+def tcId = context.expand('${InputProps#tcId}');
+def tcName = context.expand('${InputProps#tcName}');
+def testVariantId = context.expand('${InputProps#testVariantId}');
+def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
+def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
+def testRunId = context.expand('${#Project#testRunId}');
+
+def String resultMetric;
+
+resultMetric = metric + "," \
+	               + "app=" + app + ","\
+	               + "environment=" + env2test + ","\
+	               + "host=" + host + ","\
+	               + "endpoint=" + endpoint + ","\
+	               + "tcId=" + tcId + ","\
+	               + "tcName=" + tcName + ","\
+	               + "testVariantId=" + testVariantId + ","\
+	               + "testVariantDesc=" + testVariantDesc + ","\
+	               + "testStepName=" + stepName + " "\
+	               + "reqCorrelationId=" + "\"" + reqCorrelationId + "\"" + ","\
+	               + "rspStatusCode=" + "\"" + rspStatusCode + "\"" + ","\
+	               + "rspAssertsStatus=" + "\"" + rspAssertsStatus + "\"" + ","\
+	               + "randStr=" + "\"" + randStr + "\"" + ","\
+	               + "testRunId=" + "\"" + testRunId + "\"" + ","\
+	               + "reqExecDateTime=" + "\"" + reqExecDateTime + "\"" + ","\
+	               + "rspTimeTaken=" + "\"" + rspTimeTaken + "\"";
+
+log.info "resultMetric = " + resultMetric;
+
+//create file with metrics
+def file = new File(projRoot + "/02_Results/resultsMetrics.csv");
+file.append(resultMetric + "\n");
+
+log.info "******************************************************NEXT CALL*************************************************";</script></con:config></con:testStep><con:testStep type="groovy" name="@EvaluationDB" id="b6c71a63-7a5e-44be-b95e-21bc6ebd389c"><con:settings/><con:config><script>import org.apache.commons.io.FileUtils;
+
+//get project root path
+def projRoot = context.expand('${projectDir}');
+
+//get actual environment
+def env2test = context.expand('${#Project#env2test}');
+
+//get call execution dateTime
+def reqExecDateTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:SS").format(new Date());
+log.info "reqExecDateTime = " + reqExecDateTime;
+
+//get call step name
+def stepName = testRunner.testCase.getTestStepAt(context.getCurrentStepIndex()).getLabel();
+log.info "stepName = " + stepName;
+
+//get response of db step
+def dbRsp = context.expand('${${stepName}#ResponseAsXml}');
+testRunner.testCase.setPropertyValue("rspRaw", dbRsp);
+log.info "dbRsp = " + dbRsp;
+
+//set response status code
+def rspStatusCode;
+
+if (dbRsp.startsWith("&lt;Results>")) {
+
+	rspStatusCode = "OK";
+	log.info "rspStatusCode =" +  rspStatusCode;
+}
+else {
+
+	rspStatusCode = "FAILED";
+	log.info "rspStatusCode =" +  rspStatusCode;
+}
+
+//get response time
+def rspTimeTaken = testRunner.testCase.testSteps[stepName].testRequest.response.timeTaken;
+log.info "rspTimeTaken = " + rspTimeTaken + "ms";
+
+//get raw request/response and create as txt file
+if(!rspStatusCode.startsWith("x")) {
+
+	//create folder for req/rsp if not exist
+	File directory = new File(projRoot + "/03_Requests_Responses/" + env2test);
+	
+	if (!directory.exists()) {
+	
+		directory.mkdir();	
+	}
+
+	//get time dateTime for req/rsp name prefix
+	def reqExecDateTimeForFileName = new java.text.SimpleDateFormat("yyyyMMdd_HHmmSS").format(new Date());
+
+	//get time testVariantId for req/rsp name prefix
+	def testVariantId = context.expand('${InputProps#testVariantId}');
+	
+	//get random string as file unique identificator
+	randStr = org.apache.commons.lang.RandomStringUtils.random(10, true, true);
+	testRunner.testCase.setPropertyValue("randStr", randStr);
+
+	def reqStep = testRunner.testCase.getTestStepByName(stepName);
+	
+	//get connection string of db step
+	def dbCon = reqStep.getConnectionString();
+	testRunner.testCase.setPropertyValue("dbCon", dbCon);
+	log.info "dbConnectionString = " + dbCon;
+	
+	//get requset of db step
+	def dbReq = reqStep.getQuery();
+	testRunner.testCase.setPropertyValue("reqRaw", dbReq);
+	log.info "dbReq = " + dbReq;
+
+	//create raw req/rsp property 
+	def reqRaw = context.expand('${#TestCase#reqRaw}');
+	def rspRaw = context.expand('${#TestCase#rspRaw}');
+	def reqRspRaw = "ExecDateTime = " + reqExecDateTime + "\r\n\r\n" + "RAW REQUEST" + "\r\n\r\n" + reqRaw + 
+
+	"\r\n\r\n" + 
+	"=================================================================================================================================================================================" +
+	"\r\n\r\n" + 
+	"RAW RESPONSE" + "\r\n\r\n" + rspRaw;
+
+	//create file with raw req/rsp
+	def reqRspRawFile = new File(projRoot + "/03_Requests_Responses/" + env2test + "/" + stepName + "_req_rsp" + "(" + randStr + ").txt").write(reqRspRaw);
+}
+
+//check assertion status
+testRunner.testCase.setPropertyValue("rspAssertsStatus", "1");
+
+obj = context.testCase.getTestStepByName(stepName);
+assertions = obj.getAssertionList();
+assertions.each { 
+      
+	log.info(it.name + " - " + it.status);
+	status = (it.status).toString();
+
+	//assert status is failed or unknown set assert status as failed
+	if(status.startsWith("FAIL")) {
+	
+		log.info "ASSERTS FAILED";
+		testRunner.testCase.setPropertyValue("rspAssertsStatus", "-1");
+	}
+}
+
+//def metrics tags and fields 
+def metric = context.expand('${#Project#measurement}');
+def app = context.expand('${#Project#app}');
+def endpoint = context.expand('${#TestCase#dbCon}');
+def String host = endpoint.split("@")[1];
+def testVariantId = context.expand('${InputProps#testVariantId}');
+def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
+def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
+def testRunId = context.expand('${#Project#testRunId}');
+
+def String resultMetric;
+
+resultMetric = metric + "," \
+	               + "app=" + app + ","\
+	               + "environment=" + env2test + ","\
+	               + "host=" + host + ","\
+	               + "endpoint=" + endpoint + ","\
+	               + "testVariantId=" + testVariantId + ","\
+	               + "testVariantDesc=" + testVariantDesc + ","\
+	               + "testStepName=" + stepName + " "\
+	               + "rspStatusCode=" + "\"" + rspStatusCode + "\"" + ","\
+	               + "rspAssertsStatus=" + "\"" + rspAssertsStatus + "\"" + ","\
+	               + "randStr=" + "\"" + randStr + "\"" + ","\
+	               + "testRunId=" + "\"" + testRunId + "\"" + ","\
+	               + "reqExecDateTime=" + "\"" + reqExecDateTime + "\"" + ","\
+	               + "rspTimeTaken=" + "\"" + rspTimeTaken + "\"";
+
+log.info "resultMetric = " + resultMetric;
+
+//create file with metrics
+def file = new File(projRoot + "/02_Results/resultsMetrics.csv");
+file.append(resultMetric + "\n");
+
+log.info "******************************************************NEXT CALL*************************************************";</script></con:config></con:testStep><con:testStep type="groovy" name="@EvaluationTC" id="283c1106-e96a-4091-9e44-9464e5afe7dd"><con:settings/><con:config><script>import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestRequestStep;
+import com.eviware.soapui.impl.wsdl.teststeps.RestTestRequestStep;
+import com.eviware.soapui.impl.wsdl.teststeps.HttpTestRequestStep;
+import com.eviware.soapui.impl.wsdl.teststeps.JdbcRequestTestStep;
+
+log.info "********************************************GET TC STATUS********************************************************";
+//get project root path
+def projRoot = context.expand('${projectDir}');
+def env2test = context.expand('${#Project#env2test}');
+def reqExecDateTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:SS").format(new Date());
+
+def testCaseName = testRunner.testCase.name.toString();
+def testCaseStatus = testRunner.testCase.setPropertyValue("testCaseStatus", "1");
+def assertionName;
+def assertionStatus = "PASS";
+
+
+
+testRunner.testCase.testSuite.getTestCaseList().forEach {
+	
+	testCase -> testCase.getTestStepList().forEach {
+		
+		testStep ->
+		if(testStep instanceof WsdlTestRequestStep || testStep instanceof RestTestRequestStep || testStep instanceof HttpTestRequestStep || testStep instanceof JdbcRequestTestStep) {
+			
+			assertions = testStep.getAssertionList();
+			assertions.each {assertion -> 
+				
+				assertionName = assertion.name.toString();
+				assertionStatus = assertion.status.toString();
+				//log.info(assertionName + " - " + assertionStatus);
+				if(assertionStatus.startsWith("FAIL")){
+					
+					testCaseStatus = testRunner.testCase.setPropertyValue("testCaseStatus", "-1");
+				}
+			}
+		}	
+	}
+}
+testCaseStatus = context.expand('${#TestCase#testCaseStatus}');
+
+if(testCaseStatus.equals("1")) {
+	
+	log.info testCaseName + " = " + "PASSED";
+}
+else {
+	
+	log.info testCaseName + " = " + "FAILED";
+}
+
+
+//def metrics tags and fields 
+def metric = context.expand('${#Project#measurement}');
+def app = context.expand('${#Project#app}');
+def testVariantId = context.expand('${InputProps#testVariantId}');
+def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
+def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
+def testRunId = context.expand('${#Project#testRunId}');
+testCaseStatus = context.expand('${#TestCase#testCaseStatus}');
+
+def String resultMetric;
+
+resultMetric = metric + "," \
+                                 + "app=" + app + ","\
+                                 + "environment=" + env2test + ","\
+                                 + "testVariantId=" + testVariantId + ","\
+                                 + "testVariantDesc=" + testVariantDesc + " "\
+                                 + "testCaseStatus=" + "\"" + testCaseStatus + "\"" + ","\
+                                 + "testRunId=" + "\"" + testRunId + "\"";
+
+log.info "resultMetric = " + resultMetric;
+
+//create file with metrics
+def file = new File(projRoot + "/02_Results/resultsMetrics.csv");
+file.append(resultMetric + "\n");
+
+log.info "******************************************************NEXT CALL*************************************************";</script></con:config></con:testStep><con:setupScript/><con:properties/><con:reportParameters/></con:testCase><con:testCase id="d70477a0-1d4a-4c14-8cb3-1110013ff0df" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="@PostMetrics" searchProperties="true"><con:settings/><con:testStep type="groovy" name="@GetMetrics" id="3a7ccf0b-bc03-4e81-bf5e-e9ea91e22aec"><con:settings/><con:config><script>log.info ":***************************************************SEND METRICS***************************************************";
+
+def projRoot = context.expand('${projectDir}');
+def file = new File(projRoot + "/02_Results/resultsMetrics.csv");
+
+int i = 1;
+
+file.eachLine { line ->
+   
+	testRunner.testCase.testSuite.project.testSuites["Execution"].setPropertyValue("metric_" + i ,line);
+	log.info "metric_" + i + " = " + line;
+	i++	;
+}
+</script></con:config></con:testStep><con:testStep type="httprequest" name="@Post2telegraf" id="20e7c01e-bbf6-470d-9c91-d230a124b95e"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d447e27b-82e9-41fe-8637-45b1260eef36" name="@Post2telegraf" postQueryString="false" mediaType="application/xml" downloadIncludedResources="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#telegrafUrl}</con:endpoint><con:request>${#TestSuite#metric_1}
+${#TestSuite#metric_2}
+${#TestSuite#metric_3}
+${#TestSuite#metric_4}
+${#TestSuite#metric_5}
+${#TestSuite#metric_6}
+${#TestSuite#metric_7}
+${#TestSuite#metric_8}
+${#TestSuite#metric_9}
+${#TestSuite#metric_10}
+${#TestSuite#metric_11}
+${#TestSuite#metric_12}
+${#TestSuite#metric_13}
+${#TestSuite#metric_14}
+${#TestSuite#metric_15}
+${#TestSuite#metric_16}
+${#TestSuite#metric_17}
+${#TestSuite#metric_18}
+${#TestSuite#metric_19}
+${#TestSuite#metric_20}
+${#TestSuite#metric_21}
+${#TestSuite#metric_22}
+${#TestSuite#metric_23}
+${#TestSuite#metric_24}
+${#TestSuite#metric_25}
+${#TestSuite#metric_26}
+${#TestSuite#metric_27}
+${#TestSuite#metric_28}
+${#TestSuite#metric_29}
+${#TestSuite#metric_30}
+${#TestSuite#metric_31}
+${#TestSuite#metric_32}
+${#TestSuite#metric_33}
+${#TestSuite#metric_34}
+${#TestSuite#metric_35}
+${#TestSuite#metric_36}
+${#TestSuite#metric_37}
+${#TestSuite#metric_38}
+${#TestSuite#metric_39}
+${#TestSuite#metric_40}
+${#TestSuite#metric_41}
+${#TestSuite#metric_42}
+${#TestSuite#metric_43}
+${#TestSuite#metric_44}
+${#TestSuite#metric_45}
+${#TestSuite#metric_46}
+${#TestSuite#metric_47}
+${#TestSuite#metric_48}
+${#TestSuite#metric_49}
+${#TestSuite#metric_50}
+${#TestSuite#metric_51}
+${#TestSuite#metric_52}
+${#TestSuite#metric_53}
+${#TestSuite#metric_54}
+${#TestSuite#metric_55}
+${#TestSuite#metric_56}
+${#TestSuite#metric_57}
+${#TestSuite#metric_58}
+${#TestSuite#metric_59}
+${#TestSuite#metric_60}
+${#TestSuite#metric_61}
+${#TestSuite#metric_62}
+${#TestSuite#metric_63}
+${#TestSuite#metric_64}
+${#TestSuite#metric_65}
+${#TestSuite#metric_66}
+${#TestSuite#metric_67}
+${#TestSuite#metric_68}
+${#TestSuite#metric_69}
+${#TestSuite#metric_70}
+${#TestSuite#metric_71}
+${#TestSuite#metric_72}
+${#TestSuite#metric_73}
+${#TestSuite#metric_74}
+${#TestSuite#metric_75}
+${#TestSuite#metric_76}
+${#TestSuite#metric_77}
+${#TestSuite#metric_78}
+${#TestSuite#metric_79}
+${#TestSuite#metric_80}
+${#TestSuite#metric_81}
+${#TestSuite#metric_82}
+${#TestSuite#metric_83}
+${#TestSuite#metric_84}
+${#TestSuite#metric_85}
+${#TestSuite#metric_86}
+${#TestSuite#metric_87}
+${#TestSuite#metric_88}
+${#TestSuite#metric_89}
+${#TestSuite#metric_90}
+${#TestSuite#metric_91}
+${#TestSuite#metric_92}
+${#TestSuite#metric_93}
+${#TestSuite#metric_94}
+${#TestSuite#metric_95}
+${#TestSuite#metric_96}
+${#TestSuite#metric_97}
+${#TestSuite#metric_98}
+${#TestSuite#metric_99}
+${#TestSuite#metric_100}</con:request><con:assertion type="Valid HTTP Status Codes" id="5693e020-c2fe-471b-af84-9bf9c6b33585" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>204</codes></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase id="a7a7bac0-740c-42d8-8c92-da418c9f73fc" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="@CleanUp" searchProperties="true"><con:settings/><con:testStep type="groovy" name="@CleanUpProjectProps" id="e3704d79-2f61-4f35-9f05-a9b94edcbe09"><con:settings/><con:config><script>for( prop in context.testCase.testSuite.project.properties) {
+   
+	def propKey = prop.getKey();
+	testRunner.testCase.testSuite.project.removeProperty(propKey);	
+}</script></con:config></con:testStep><con:testStep type="groovy" name="@CleanUpTestSuiteProps" id="77c1e447-fa86-48d5-837f-6e38cf57b887"><con:settings/><con:config><script>for( prop in context.testCase.testSuite.properties) {
+   
+	def propKey = prop.getKey();
+	testRunner.testCase.testSuite.removeProperty(propKey);	
+}</script></con:config></con:testStep><con:testStep type="groovy" name="@CleanUpTestCaseProps" id="873a09bb-0100-49a6-9350-05c139c73933"><con:settings/><con:config><script>for( prop in context.testCase.properties) {
+   
+	def propKey = prop.getKey();
+	testRunner.testCase.removeProperty(propKey);	
+}</script></con:config></con:testStep><con:testStep type="groovy" name="@CleanUpInputProps" id="b0b4e44d-31e2-4145-8139-9afb26c51a83"><con:settings/><con:config><script>def inputProps = testRunner.testCase.getTestStepByName("InputProps");
+
+for(prop in inputProps.getProperties()){
+
+	inputProps.removeProperty(prop.getKey());
+}</script></con:config></con:testStep><con:testStep type="groovy" name="@CleanUpOutputProps" id="5c24ef47-d4b5-4fb4-9aaa-9123233dff2e"><con:settings/><con:config><script>def outputProps = testRunner.testCase.getTestStepByName("OutputProps");
+
+for(prop in outputProps.getProperties()){
+
+	outputProps.removeProperty(prop.getKey());
+}</script></con:config></con:testStep><con:testStep type="groovy" name="@CleanUpOutputs" id="c644976b-cebb-4719-b348-ffa4ce1b5f29"><con:settings/><con:config><script>import com.eviware.soapui.support.XmlHolder;
+import jxl.*;
+import jxl.write.*;
+
+def DS = testRunner.testCase.testSteps['DataSources'].getPropertyValue("DSOutput");
+
+if(DS.equals("N/A")) {
+	
+	log.info "CleanUp the output dataSource - No dataSource to clean";
+	log.info "******************************************************************************************************************";
+}
+else {
+
+	log.info "CleanUp the output dataSource = " + DS;
+	log.info "******************************************************************************************************************";
+	def DSPath = context.expand('${#TestCase#DSPath}');
+
+	Workbook wb = Workbook.getWorkbook(new File(DSPath));
+	WritableWorkbook wb1 = Workbook.createWorkbook(new File(DSPath), wb);  
+	WritableSheet sh = wb1.getSheet(0);  
+	Sheet sh1 = wb1.getSheet(0);  
+
+	int i = sh1.getRows();
+
+	for (int j = i -1 ; j >= 1 ; j--) {
+		
+		sh1.removeRow(j);
+	}
+	wb1.write();
+	wb1.close();
+}</script></con:config></con:testStep><con:testStep type="groovy" name="@CleanUpMetricsFile" id="74107321-4f54-4ad2-b4f4-6e52100d08e6"><con:settings/><con:config><script>import org.apache.commons.io.FileUtils;
+
+def projRoot = context.expand('${projectDir}');
+def file = new File(projRoot + "/02_Results/resultsMetrics.csv");
+file.bytes = new byte[0];</script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase id="7ab8d102-99df-47fa-988c-9884e28a2713" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="@WriteOutputs" searchProperties="true"><con:settings/><con:testStep type="groovy" name="@CreateOutputFile" id="53549c8c-b4aa-4e80-9e51-e1730f36f566"><con:settings/><con:config><script>//import org.apache.commons.io.FileUtils;
+import jxl.*;
+import jxl.write.*;
+
+//create results file
+def projRoot = context.expand('${projectDir}');
+def env2test = context.expand('${#Project#env2test}');
+def DS = testRunner.testCase.testSteps['DataSources'].getPropertyValue("DSOutput");
+def DSPath = projRoot + "/02_Results/" + DS +  "_" + env2test + ".xls";
+
+testRunner.testCase.setPropertyValue("DSPath", DSPath);
+
+WritableWorkbook wb = Workbook.createWorkbook(new File(DSPath));
+WritableSheet sh = wb.createSheet("List1", 0);
+Label label = new Label(0,0,"noempty");
+sh.addCell(label);
+wb.write();
+wb.close();
+</script></con:config></con:testStep><con:testStep type="groovy" name="@WriteOutputs" id="ae779676-0d45-4fc2-b331-e220c082cf0e"><con:settings/><con:config><script>import com.eviware.soapui.support.XmlHolder;
+import org.apache.commons.io.FileUtils;
+import jxl.*;
+import jxl.write.*;
+
+def projRoot = context.expand('${projectDir}');
+def env2test = context.expand('${#Project#env2test}');
+def DS = testRunner.testCase.testSteps['DataSources'].getPropertyValue("DSOutput");
+def DSPath = projRoot + "/02_Results/" + DS +  "_" + env2test + ".xls";
+
+def outputProps = testRunner.testCase.testSteps["OutputProps"];
+def outputPropsCount = outputProps.getPropertyCount();
+
+if (outputPropsCount > 0) {
+
+	Workbook wb = Workbook.getWorkbook(new File(DSPath));
+	WritableWorkbook wb1 = Workbook.createWorkbook(new File(DSPath), wb);  
+	WritableSheet sh = wb1.getSheet(0);
+	Sheet sh1 = wb1.getSheet(0);
+	
+	int i = 0;
+	int j = 1;
+	int k = sh1.getRows();
+
+	for (prop in outputProps.getPropertyList()) {
+	
+		def headerCol = prop.getName();
+		Label header = new Label(i, 0, headerCol);
+		sh.addCell(header);
+		def val = prop.getValue();
+		Label value = new Label(i, k, val);
+		sh.addCell(value);
+		i++
+	}
+	wb1.write();
+	wb1.close();
+}
+else {
+	
+	log.info("No properties");
+}
+</script></con:config></con:testStep><con:setupScript>
+</con:setupScript><con:properties/><con:reportParameters/></con:testCase><con:testCase id="ca67b801-5e44-4479-b03f-113393c05496" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="@OpenBrowser" searchProperties="true"><con:settings/><con:testStep type="groovy" name="@OpenBrowserWithUrl" id="076eb898-6e64-4240-8d7f-e66b8eef0f76"><con:settings/><con:config><script>def browserPath = testRunner.testCase.testSuite.project.testSuites["Runner"].testCases["Runner"].testSteps["InputProps"].getPropertyValue("browserPath").replace("\\", "\\\\");
+def reqUrl =context.expand('${InputProps#reqUrl}');
+
+def ProcessBuilder pb = new ProcessBuilder(browserPath, reqUrl);
+pb.start();
+
+return;</script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase id="71e53a75-3058-4755-9c9c-4dad83e67e7a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="@GetData" searchProperties="true"><con:settings/><con:testStep type="groovy" name="@GetCorrelationId" id="253c06e4-98bc-4309-9eea-ddc0c584bd75"><con:settings/><con:config><script>def randNumeric = org.apache.commons.lang.RandomStringUtils.randomNumeric(24);
+def reqCorrelationId = "c" + randNumeric;
+testRunner.testCase.setPropertyValue("reqCorrelationId", reqCorrelationId);</script></con:config></con:testStep><con:testStep type="groovy" name="@GetTestRunId" id="808787b4-bc3c-440d-ad34-bb4db8ada898"><con:settings/><con:config><script>def testRunId = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:SS").format(new Date());
+testRunner.testCase.testSuite.project.setPropertyValue("testRunId", testRunId);
+
+log.info "******************************************************************************************************************";
+log.info "***************************START OF THE TEST - TEST RUN ID = " + testRunId + "****************************"; 
+log.info "******************************************************************************************************************";
+</script></con:config></con:testStep><con:testStep type="groovy" name="@GetDates" id="695bc89c-bf97-4586-bcac-f181bc6ab3d0"><con:settings/><con:config><script>import java.util.Calendar;
+import java.text.SimpleDateFormat;
+
+def inputProps = testRunner.testCase.testSteps["InputProps"];
+
+for (prop in inputProps.getPropertyList()) {
+	
+	def propName = prop.getName();
+	def propValue = prop.getValue();
+	
+	if(propName.contains("(d)") || propName.contains("(dt)")) {
+	
+		def dsPeriod = propValue.substring(0,1);
+		def dsOperator;
+		def dsValue;
+		int dsIntValue;
+		
+		if (propValue.length() > 1) {
+			dsOperator = propValue.substring(1,2);
+			dsValue = propValue.substring(2);
+			dsIntValue = Integer.parseInt(dsValue);
+		}
+		SimpleDateFormat sdf;
+		if(propName.contains("(d)")) {
+
+			sdf = new SimpleDateFormat("yyyy-MM-dd");
+		}
+		if(propName.contains("(dt)")) {
+
+			sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+		}
+		Date dt = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dt);
+		Map periodMap = [D: "DATE", W: "WEEK_OF_MONTH", M: "MONTH", Y: "YEAR"];
+		def periodMapVal = periodMap[dsPeriod];
+		
+		if(dsPeriod.equals(dsPeriod)) {
+		
+			if(dsOperator.equals("-")) {
+				
+				cal.add(Calendar."${periodMapVal}", - dsIntValue);
+			}
+			else{
+				
+				cal.add(Calendar."${periodMapVal}", dsIntValue);
+			}
+		}
+		def evalDate = sdf.format(cal.getTime());
+		testRunner.testCase.testSteps['InputProps'].setPropertyValue(propName, evalDate);
+		log.info propName + " = " + evalDate;
+	}
+}</script></con:config></con:testStep><con:testStep type="groovy" name="@GetBirthNumber" id="5573c12b-ca9d-4754-9e16-14b41b1fc324"><con:settings/><con:config><script>import java.util.Random;
+
+def String birthDateString = context.expand('${InputProps#dsBirthdate(d)}');
+def gender = context.expand('${InputProps#dsGender}');
+        
+context.generatedRC = generateSimpleRC(birthDateString, gender);
+
+def generateSimpleRC(birthDateString, gender) {
+
+	def yearPartofRC = birthDateString.substring(2, 4);
+	def monthPartofRC = birthDateString.substring(5, 7);
+	
+	if (gender.equals("F")) {
+		
+		int monthNumber = Integer.valueOf(monthPartofRC);
+		monthPartofRC = String.valueOf(monthNumber + 50);
+	}
+	def dayPartofRC = birthDateString.substring(8);
+	def parsedRCDateBase = yearPartofRC + monthPartofRC + dayPartofRC;
+	
+	def random = new Random();
+	def int randomNumber = random.ints(100, (999 + 1)).findFirst().getAsInt();
+	def String randomRCsuffixString = String.valueOf(randomNumber);
+	def RCBaseString = parsedRCDateBase + randomRCsuffixString;
+	
+	int valueForModulo11Validation = Integer.valueOf(RCBaseString);
+	
+	def int modulo11 = valueForModulo11Validation % 11;
+	def validationDigit;
+	
+	if (modulo11 == 10) {
+		
+		validationDigit = "0";
+	} 
+	else {
+		
+		validationDigit = String.valueOf(modulo11);
+	}
+	//log.info RCBaseString + validationDigit;
+	testRunner.testCase.getTestStepByName("InputProps")setPropertyValue( "birthNumber", RCBaseString + validationDigit.toString());
+}</script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase id="0ee438d2-2ff8-4278-b145-b9b906c6004f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="@Dialogs" searchProperties="true"><con:settings/><con:testStep type="groovy" name="@MessageDialog" id="29f214ef-a722-4ae5-bedf-e39b71116cdf"><con:settings/><con:config><script>import javax.swing.*
+
+def dialogMessage = context.expand('${InputProps#dialogMessage}');
+def dialogTitle =context.expand('${InputProps#dialogTitle}');
+
+JFrame frame = new JFrame("MessageDialog");
+JOptionPane.showMessageDialog(
+	frame,
+	dialogMessage, 
+	dialogTitle, 
+	JOptionPane.INFORMATION_MESSAGE
+);</script></con:config></con:testStep><con:testStep type="groovy" name="@InputDialog" id="8a4be68e-ac98-4b70-886e-060b28f140da"><con:settings/><con:config><script>import javax.swing.*
+
+def dialogMessage = context.expand('${InputProps#dialogMessage}');
+def dialogTitle =context.expand('${InputProps#dialogTitle}');
+
+JFrame frame = new JFrame("InputDialog");
+def String dialogInput = JOptionPane.showInputDialog(
+        frame, 
+        dialogMessage, 
+        dialogTitle, 
+        JOptionPane.WARNING_MESSAGE
+);
+
+testRunner.testCase.getTestStepByName("InputProps").setPropertyValue("dialogInput", dialogInput);</script></con:config></con:testStep><con:testStep type="groovy" name="@ChoiceYesNoDialog" id="2af7e5ad-8b92-4719-8d72-3cec6fc45481"><con:settings/><con:config><script>import javax.swing.*
+
+def dialogMessage = context.expand('${InputProps#dialogMessage}');
+def dialogTitle =context.expand('${InputProps#dialogTitle}');
+
+JFrame frame = new JFrame("YesNoDialog");
+
+def String dialogInput = JOptionPane.showConfirmDialog(
+    frame,
+    dialogMessage,
+    dialogTitle,
+    JOptionPane.YES_NO_OPTION
+);
+
+testRunner.testCase.getTestStepByName("InputProps").setPropertyValue("dialogInput", dialogInput);
+
+        </script></con:config></con:testStep><con:testStep type="groovy" name="@ChoiceInputDialog" id="d5cf0771-e675-4b6d-9c53-6066fcd797c0"><con:settings/><con:config><script>import javax.swing.*
+
+def dialogMessage = context.expand('${InputProps#dialogMessage}');
+def dialogTitle =context.expand('${InputProps#dialogTitle}');
+
+def choices = new String[3] 
+
+choices[0] = "choice1"
+choices[1] = "choice2"
+choices[2] = "choice3"
+
+JFrame frame = new JFrame("ChoiceInputDialog");
+def String dialogInput = (String) JOptionPane.showInputDialog(
+	   frame,
+        "What is your choice?",
+        "Choice",
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        choices,
+        choices[0]
+);
+
+testRunner.testCase.getTestStepByName("InputProps").setPropertyValue("dialogInput", dialogInput);        </script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite id="f1b183a1-dc79-4206-a7e8-305bffa474dd" name="Execution" disabled="true"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="abd3a132-6536-467f-8a52-2eaf9de2a341" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="properties" name="DataSources" id="dd550280-e63b-41e6-83a0-56aba2488574"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>DSInput</con:name><con:value>DS_cleanVersion</con:value></con:property><con:property><con:name>DSOutput</con:name><con:value>Results_cleanVersion</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="DSLooper" id="c602dc98-9e1f-480e-81e6-fc67dba266df"><con:settings/><con:config><script>//GetCorrelationId
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@GetData"].testSteps["@GetCorrelationId"].run(testRunner, context);
+//DSLooper
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@Looper"].testSteps["@DSLooper"].run(testRunner, context);
+//GetDates
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@GetData"].testSteps["@GetDates"].run(testRunner, context);
+//GetBirthNumber
+//testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@GetData"].testSteps["@GetBirthNumber"].run(testRunner, context);
+return;</script></con:config></con:testStep><con:testStep type="properties" name="LooperProps" id="cb51f3ec-e6c3-4db0-9553-e2e5ac6793be"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>RowsCount</con:name><con:value>2</con:value></con:property><con:property><con:name>ActualRow</con:name><con:value>1</con:value></con:property><con:property><con:name>NextRow</con:name><con:value>2</con:value></con:property><con:property><con:name>StopLoop</con:name><con:value>StopLoop</con:value></con:property><con:property><con:name>LoopsCount</con:name><con:value>0</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="InputProps" id="0431ee70-3da7-4ed9-825b-64775714b35f"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcId</con:name><con:value>1</con:value></con:property><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>dsVal1</con:name><con:value/></con:property><con:property><con:name>dsVal2</con:name><con:value/></con:property><con:property><con:name>dsVal3</con:name><con:value/></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="OutputProps" id="334ab4ec-5baf-4530-a7bb-375953a53199"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>TimedOut</con:value></con:property><con:property><con:name>rspAssertsStatus</con:name><con:value>1</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="WriteOutputs" id="47982b2b-d77a-4282-b133-8bc1ae7d3f88"><con:settings/><con:config><script>log.info "*******************************WRITTEN VALUES******************************"
+
+def tcName = context.expand('${InputProps#tcName}');
+log.info "tcName = " + tcName;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("tcName", tcName);
+
+def testVariantId = context.expand('${InputProps#testVariantId}');
+log.info "testVariantId = " + testVariantId;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("testVariantId", testVariantId);
+
+def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
+log.info "testVariantDesc = " + testVariantDesc;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("testVariantDesc", testVariantDesc);
+
+def rspStatusCode = context.expand('${#TestCase#rspStatusCode}');
+log.info "rspStatusCode = " + rspStatusCode;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("rspStatusCode", rspStatusCode);
+
+def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
+log.info "rspAssertsStatus = " + rspAssertsStatus;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("rspAssertsStatus", rspAssertsStatus);
+
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@WriteOutputs"].testSteps["@WriteOutputs"].run(testRunner, context);
+
+log.info "**********************************NEXT CALL**********************************";</script></con:config></con:testStep><con:testStep type="groovy" name="DSLoop" id="4dc58d22-f9a8-4f83-9ac3-f8286b6a2a53"><con:settings/><con:config><script>//get testCase status
+//testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@Evaluation"].testSteps["@EvaluationTC"].run(testRunner, context);
+//DSLoop
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@Looper"].testSteps["@DSLoop"].run(testRunner, context);
+return;</script></con:config></con:testStep><con:setupScript>//cleanUp InputProps
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@CleanUp"].testSteps["@CleanUpInputProps"].run(testRunner, context);
+//cleanUp OutputProps
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@CleanUp"].testSteps["@CleanUpOutputProps"].run(testRunner, context);
+//cleanUp TestSuite Props
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@CleanUp"].testSteps["@CleanUpTestSuiteProps"].run(testRunner, context);
+//clear content of file for metrics
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@CleanUp"].testSteps["@CleanUpMetricsFile"].run(testRunner, context);
+//create results file
+testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@WriteOutputs"].testSteps["@CreateOutputFile"].run(testRunner, context);</con:setupScript><con:tearDownScript>//Send metrics to grafana?
+def sendMetrics = context.expand('${#Project#sendMetrics}');
+
+if (sendMetrics.equals("true")) {
+	
+	testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@PostMetrics"].testSteps["@GetMetrics"].run(testRunner, context);
+	testRunner.testCase.testSuite.project.testSuites["@Utils"].testCases["@PostMetrics"].testSteps["@Post2telegraf"].run(testRunner, context);
+	log.info "Results were sent to Grafana";	
+}
+else {
+
+	log.info "Results were not sent to Grafana";	
+}</con:tearDownScript><con:properties><con:property><con:name>nextRow</con:name><con:value>1</con:value></con:property><con:property><con:name>DSPath</con:name><con:value>D:\01_WORK\01_Actual_work\01_CLV\01_Projects\01_CAT\01_clv.cat.soapuiplus/01_DataSources/DS_cleanVersion_TEST.xls</con:value></con:property><con:property><con:name>rspAssertsStatus</con:name><con:value>1</con:value></con:property><con:property><con:name>randStr</con:name><con:value>tK3PhFYGFL</con:value></con:property><con:property><con:name>reqRaw</con:name><con:value>GET https://test-api.connect.skoda-auto.cz/api/v1/vehicle/AAALJ9NP0J7605259 HTTP/1.1
+Accept-Encoding: gzip,deflate
+X-Correlation-Id: c516311722221621919277490
+Host: test-api.connect.skoda-auto.cz
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.1.1 (java 1.5)
+</con:value></con:property><con:property><con:name>rspRaw</con:name><con:value>HTTP/1.1 404 
+Server: openresty/1.15.8.1
+Date: Tue, 29 Oct 2019 09:05:19 GMT
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=15724800; includeSubDomains
+Content-Encoding: gzip
+
+{"timestamp":"2019-10-29T09:05:19.309+0000","status":404,"error":"Not Found","message":"Unknown car with VIN code: AAALJ9NP0J7605259","path":"/api/v1/vehicle/AAALJ9NP0J7605259"}</con:value></con:property><con:property><con:name>reqCorrelationId</con:name><con:value>c951108401664359294643453</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>TimedOut</con:value></con:property><con:property><con:name>rawRequest</con:name><con:value><![CDATA[POST http://10.10.1.14:8080/soap
+
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://testservice.cleverlance.com/service/Address/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <add:createClientRequest>
+         <add:in>
+            <firstName>?</firstName>
+            <lastName>?</lastName>
+         </add:in>
+      </add:createClientRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:setupScript>def env2test  = context.expand ('${#Project#env2test}');
+
+log.info "****************************************RUN ON ENVIRONMENT " + env2test + "****************************************";
+log.info "******************************************************************************************************************";</con:setupScript><con:tearDownScript/><con:reportParameters/></con:testSuite><con:properties><con:property><con:name>testRunId</con:name><con:value>2020-04-13 12:02:570</con:value></con:property><con:property><con:name>env2test</con:name><con:value>TEST</con:value></con:property><con:property><con:name>host</con:name><con:value>https://test.cz</con:value></con:property><con:property><con:name>measurement</con:name><con:value>test_v01</con:value></con:property><con:property><con:name>app</con:name><con:value>test</con:value></con:property><con:property><con:name>browserPath</con:name><con:value>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</con:value></con:property><con:property><con:name>sendMetrics</con:name><con:value>false</con:value></con:property><con:property><con:name>telegrafUrl</con:name><con:value>https://qatick.clance.local/telegraf</con:value></con:property><con:property><con:name>test</con:name><con:value>test</con:value></con:property></con:properties><con:wssContainer/><con:databaseConnectionContainer/><con:jmsConnectionContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/><con:authRepository/><con:tags/></con:soapui-project>
