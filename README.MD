@@ -49,7 +49,7 @@ Update:
 
 # Documentation
 
-TBD
+https://github.com/Cleverlance-qa/soapuiplus-3.0/wiki
 
 # Contact/support
 
