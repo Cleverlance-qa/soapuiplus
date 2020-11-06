@@ -3,7 +3,7 @@
   <con:description>SoapUIplus version - 3.0.0</con:description>
   <con:settings/>
   <con:collectInfoForSupport>false</con:collectInfoForSupport>
-  <con:project name="CleanVersion">C:/Users/MZ/Desktop/soapuiplus-3.0/CleanVersion-soapuiplus-project.xml</con:project>
+  <con:project name="CleanVersion">D:/01_WORK/01_Actual_work/01_CLV/01_Projects/01_CAT/01_Github/soapuiplus-3.0/CleanVersion-soapuiplus-project.xml</con:project>
   <con:navigatorNodeCollection>
     <con:rootNodeLabel>Projects</con:rootNodeLabel>
   </con:navigatorNodeCollection>
