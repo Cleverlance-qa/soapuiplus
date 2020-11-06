@@ -1,12 +1,21 @@
 ﻿# Release Notes
 
+## v3.0.0 - Nov 06th, 2020
+
+Updates:
+ 
+- Refactoring - post2telegraf step moved to testSuite/testCase Runner - 4f96431
+
+
 ## v3.0.0 - Oct 27th, 2020
+
 Bugfixes:
 
 - Fix post2telefraf.groovy - condition with status code for loging
 
 ## v3.0.0 - Oct 19th, 2020
-Update: 
+
+Updates: 
 
 - Added - conndition for creating rer/rsp when time out occures
 - Added - flag (true/false) for wraiting failed only req/rsp to file
@@ -19,7 +28,8 @@ Bugfixes:
 
 
 ## v3.0.0 - Oct 1th, 2020
-Update: 
+
+Updates: 
 
 - Refactoring - @Utils relocated outside of the project for better updates 
 - Added - XLSX support
@@ -28,18 +38,21 @@ Update:
 
 
 ## v2.6.1 - Apr 14th, 2020
-Update: 
+
+Updates: 
 
 - Added birthNumberGenerator
 
 
 ## v2.6.0 - Mar 29th, 2020
+
 Bugfixes: 
 
 - Fix evaluation randStr when req/rsp files not created
 
 ## v2.6.0 - Mar 29th, 2020
-Update: 
+
+Updates: 
 
 - Update name convention for inlufxDB tags and fields
 
@@ -54,6 +67,3 @@ https://github.com/Cleverlance-qa/soapuiplus-3.0/wiki
 # Contact/support
 
 martin.zelenka@cleverlance.com
-
-
-

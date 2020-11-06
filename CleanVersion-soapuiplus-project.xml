@@ -47,61 +47,7 @@ runner.waitUntilFinished();
 </script></con:config></con:testStep><con:testStep type="groovy" name="DSLoop" id="dbbbc614-8c7c-4396-b6b9-23774fcbbb1c"><con:settings/><con:config><script>//DSLoop
 evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLoop.groovy").replaceAll("\\\\","/")))</script></con:config></con:testStep><con:testStep type="groovy" name="Evaluation" id="68b90d80-f18a-4332-aeb9-7e4eb664e128" disabled="true"><con:settings/><con:config><script>//Evaluation
 evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Evaluation/Evaluation.groovy").replaceAll("\\\\","/")))
-</script></con:config></con:testStep><con:setupScript>//cleanUp InputProps
-evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/CleanUp/CleanUpInputProps.groovy").replaceAll("\\\\","/")));</con:setupScript><con:properties><con:property><con:name>DSPath</con:name><con:value>C:/Users/MZ/Desktop/soapuiplus-3.0/01_DataSources/DS_envConfig.xlsx</con:value></con:property><con:property><con:name>nextRow</con:name><con:value>1</con:value></con:property><con:property><con:name>randStr</con:name><con:value>b4HKuQMJyH</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>TimedOut</con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:setupScript/><con:reportParameters/></con:testSuite><con:testSuite id="f1b183a1-dc79-4206-a7e8-305bffa474dd" name="Execution" disabled="true"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="abd3a132-6536-467f-8a52-2eaf9de2a341" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="properties" name="DataSources" id="dd550280-e63b-41e6-83a0-56aba2488574"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>DSInput</con:name><con:value>DS_cleanVersion</con:value></con:property><con:property><con:name>DSOutput</con:name><con:value>Results_cleanVersion</con:value></con:property><con:property><con:name>DSInputType</con:name><con:value>xlsx</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="DSLooper" id="c602dc98-9e1f-480e-81e6-fc67dba266df"><con:settings/><con:config><script>/*
-MISTO PRO NACTENI VLASTNI FUNKCE
-*/
-// GetCorrelationId - VZOR
-evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/GetData/GetCorrelationId.groovy").replaceAll("\\\\","/")))
-//log.info "************************************************"
-
-//DSLooper
-def debug_error = context.expand('${#Project#debug_error}');
-def dsInputType = testRunner.testCase.testSteps['DataSources'].getPropertyValue("dsInputType"); 
-
-if (debug_error == "true"){
-	log.info "************************************************"
-	log.info "dsInputType = " + dsInputType
-	log.info "************************************************"
-}
- 
-if(dsInputType == "xls"){
-	//DSLooper
-	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLooperXLS.groovy").replaceAll("\\\\","/")))
-} else if (dsInputType == "xlsx"){
-	//DSLooper
-	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLooperXLSX.groovy").replaceAll("\\\\","/")))
-} else if (dsInputType == "csv"){
-	//DSLooper
-	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLooperXLS.groovy").replaceAll("\\\\","/")))
-}
-</script></con:config></con:testStep><con:testStep type="properties" name="LooperProps" id="cb51f3ec-e6c3-4db0-9553-e2e5ac6793be"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>RowsCount</con:name><con:value>2</con:value></con:property><con:property><con:name>ActualRow</con:name><con:value>1</con:value></con:property><con:property><con:name>NextRow</con:name><con:value>2</con:value></con:property><con:property><con:name>StopLoop</con:name><con:value>StopLoop</con:value></con:property><con:property><con:name>LoopsCount</con:name><con:value>0</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="InputProps" id="0431ee70-3da7-4ed9-825b-64775714b35f"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcId</con:name><con:value>1</con:value></con:property><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>tcDesc</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>dsVal1</con:name><con:value/></con:property><con:property><con:name>dsVal2</con:name><con:value/></con:property><con:property><con:name>dsVal3</con:name><con:value/></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="OutputProps" id="334ab4ec-5baf-4530-a7bb-375953a53199"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>200</con:value></con:property><con:property><con:name>rspAssertsStatus</con:name><con:value>1</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="WriteOutputs" id="47982b2b-d77a-4282-b133-8bc1ae7d3f88"><con:settings/><con:config><script>log.info "*******************************WRITTEN VALUES******************************"
-
-def tcName = context.expand('${InputProps#tcName}');
-log.info "tcName = " + tcName;
-testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("tcName", tcName);
-
-def testVariantId = context.expand('${InputProps#testVariantId}');
-log.info "testVariantId = " + testVariantId;
-testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("testVariantId", testVariantId);
-
-def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
-log.info "testVariantDesc = " + testVariantDesc;
-testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("testVariantDesc", testVariantDesc);
-
-def rspStatusCode = context.expand('${#TestCase#rspStatusCode}');
-log.info "rspStatusCode = " + rspStatusCode;
-testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("rspStatusCode", rspStatusCode);
-
-def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
-log.info "rspAssertsStatus = " + rspAssertsStatus;
-testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("rspAssertsStatus", rspAssertsStatus);
-
-evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/WriteOutputs/WriteOutputs.groovy").replaceAll("\\\\","/")))
-
-log.info "**********************************NEXT CALL**********************************";</script></con:config></con:testStep><con:testStep type="groovy" name="DSLoop" id="4dc58d22-f9a8-4f83-9ac3-f8286b6a2a53"><con:settings/><con:config><script>//DSLoop
-evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLoop.groovy").replaceAll("\\\\","/")))
-</script></con:config></con:testStep><con:testStep type="httprequest" name="Post2telegraf" id="20e7c01e-bbf6-470d-9c91-d230a124b95e" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d447e27b-82e9-41fe-8637-45b1260eef36" name="Post2telegraf" postQueryString="false" mediaType="application/xml" downloadIncludedResources="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#telegrafUrl}</con:endpoint><con:request>${#TestSuite#metric_1}
+</script></con:config></con:testStep><con:testStep type="httprequest" name="Post2telegraf" id="9bf3d041-befe-443c-8e3a-56c96115cef9" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d447e27b-82e9-41fe-8637-45b1260eef36" name="Post2telegraf" postQueryString="false" mediaType="application/xml" downloadIncludedResources="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#telegrafUrl}</con:endpoint><con:request>${#TestSuite#metric_1}
 ${#TestSuite#metric_2}
 ${#TestSuite#metric_3}
 ${#TestSuite#metric_4}
@@ -201,6 +147,60 @@ ${#TestSuite#metric_97}
 ${#TestSuite#metric_98}
 ${#TestSuite#metric_99}
 ${#TestSuite#metric_100}</con:request><con:assertion type="Valid HTTP Status Codes" id="5693e020-c2fe-471b-af84-9bf9c6b33585" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>204</codes></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:setupScript>//cleanUp InputProps
+evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/CleanUp/CleanUpInputProps.groovy").replaceAll("\\\\","/")));</con:setupScript><con:properties><con:property><con:name>DSPath</con:name><con:value>C:/Users/MZ/Desktop/soapuiplus-3.0/01_DataSources/DS_envConfig.xlsx</con:value></con:property><con:property><con:name>nextRow</con:name><con:value>1</con:value></con:property><con:property><con:name>randStr</con:name><con:value>b4HKuQMJyH</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>TimedOut</con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:setupScript/><con:reportParameters/></con:testSuite><con:testSuite id="f1b183a1-dc79-4206-a7e8-305bffa474dd" name="Execution" disabled="true"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="abd3a132-6536-467f-8a52-2eaf9de2a341" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="properties" name="DataSources" id="dd550280-e63b-41e6-83a0-56aba2488574"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>DSInput</con:name><con:value>DS_cleanVersion</con:value></con:property><con:property><con:name>DSOutput</con:name><con:value>Results_cleanVersion</con:value></con:property><con:property><con:name>DSInputType</con:name><con:value>xlsx</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="DSLooper" id="c602dc98-9e1f-480e-81e6-fc67dba266df"><con:settings/><con:config><script>/*
+MISTO PRO NACTENI VLASTNI FUNKCE
+*/
+// GetCorrelationId - VZOR
+evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/GetData/GetCorrelationId.groovy").replaceAll("\\\\","/")))
+//log.info "************************************************"
+
+//DSLooper
+def debug_error = context.expand('${#Project#debug_error}');
+def dsInputType = testRunner.testCase.testSteps['DataSources'].getPropertyValue("dsInputType"); 
+
+if (debug_error == "true"){
+	log.info "************************************************"
+	log.info "dsInputType = " + dsInputType
+	log.info "************************************************"
+}
+ 
+if(dsInputType == "xls"){
+	//DSLooper
+	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLooperXLS.groovy").replaceAll("\\\\","/")))
+} else if (dsInputType == "xlsx"){
+	//DSLooper
+	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLooperXLSX.groovy").replaceAll("\\\\","/")))
+} else if (dsInputType == "csv"){
+	//DSLooper
+	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLooperXLS.groovy").replaceAll("\\\\","/")))
+}
+</script></con:config></con:testStep><con:testStep type="properties" name="LooperProps" id="cb51f3ec-e6c3-4db0-9553-e2e5ac6793be"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>RowsCount</con:name><con:value>2</con:value></con:property><con:property><con:name>ActualRow</con:name><con:value>1</con:value></con:property><con:property><con:name>NextRow</con:name><con:value>2</con:value></con:property><con:property><con:name>StopLoop</con:name><con:value>StopLoop</con:value></con:property><con:property><con:name>LoopsCount</con:name><con:value>0</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="InputProps" id="0431ee70-3da7-4ed9-825b-64775714b35f"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcId</con:name><con:value>1</con:value></con:property><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>tcDesc</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>dsVal1</con:name><con:value/></con:property><con:property><con:name>dsVal2</con:name><con:value/></con:property><con:property><con:name>dsVal3</con:name><con:value/></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="OutputProps" id="334ab4ec-5baf-4530-a7bb-375953a53199"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>200</con:value></con:property><con:property><con:name>rspAssertsStatus</con:name><con:value>1</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="WriteOutputs" id="47982b2b-d77a-4282-b133-8bc1ae7d3f88"><con:settings/><con:config><script>log.info "*******************************WRITTEN VALUES******************************"
+
+def tcName = context.expand('${InputProps#tcName}');
+log.info "tcName = " + tcName;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("tcName", tcName);
+
+def testVariantId = context.expand('${InputProps#testVariantId}');
+log.info "testVariantId = " + testVariantId;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("testVariantId", testVariantId);
+
+def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
+log.info "testVariantDesc = " + testVariantDesc;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("testVariantDesc", testVariantDesc);
+
+def rspStatusCode = context.expand('${#TestCase#rspStatusCode}');
+log.info "rspStatusCode = " + rspStatusCode;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("rspStatusCode", rspStatusCode);
+
+def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
+log.info "rspAssertsStatus = " + rspAssertsStatus;
+testRunner.testCase.getTestStepByName("OutputProps").setPropertyValue("rspAssertsStatus", rspAssertsStatus);
+
+evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/WriteOutputs/WriteOutputs.groovy").replaceAll("\\\\","/")))
+
+log.info "**********************************NEXT CALL**********************************";</script></con:config></con:testStep><con:testStep type="groovy" name="DSLoop" id="4dc58d22-f9a8-4f83-9ac3-f8286b6a2a53"><con:settings/><con:config><script>//DSLoop
+evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLoop.groovy").replaceAll("\\\\","/")))
+</script></con:config></con:testStep><con:setupScript>//cleanUp InputProps
 evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/CleanUp/CleanUpInputProps.groovy").replaceAll("\\\\","/")));
 
 //cleanUp OutputProps

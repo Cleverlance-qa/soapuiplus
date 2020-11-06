@@ -7,9 +7,9 @@ def debug_error = context.expand('${#Project#debug_error}');
 
 log.info "Running Post2telegraf";
 
-testRunner.testCase.testSuite.project.testSuites["Execution"].testCases["TestCase"].testSteps["Post2telegraf"].run(testRunner, context);
+testRunner.testCase.testSuite.project.testSuites["Runner"].testCases["Runner"].testSteps["Post2telegraf"].run(testRunner, context);
 
-def responseCode = testRunner.testCase.testSuite.project.testSuites["Execution"].testCases["TestCase"].testSteps["Post2telegraf"].testRequest.response.responseHeaders["#status#"].toString();
+def responseCode = testRunner.testCase.testSuite.project.testSuites["Runner"].testCases["Runner"].testSteps["Post2telegraf"].testRequest.response.responseHeaders["#status#"].toString();
 
 def rspStatusCode = (responseCode =~ "[1-5]\\d\\d")[0];
 
