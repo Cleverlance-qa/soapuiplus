@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <con:soapui-workspace name="CleanVersion" soapui-version="5.5.0" cid="0d28943a-fc70-4c1e-b205-3dfeff2a8cdc" xmlns:con="http://eviware.com/soapui/config">
-  <con:description>SoapUIplus version - 3.0.0</con:description>
+  <con:description>SoapUIplus version - 3.8.1</con:description>
   <con:settings/>
   <con:collectInfoForSupport>false</con:collectInfoForSupport>
   <con:project name="CleanVersion">D:/01_WORK/01_Actual_work/01_CLV/01_Projects/01_CAT/01_Github/soapuiplus-3.0/CleanVersion-soapuiplus-project.xml</con:project>

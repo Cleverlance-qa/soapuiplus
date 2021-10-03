@@ -1,6 +1,5 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>                 					OpenBrowserWithUrl  
-//>										version 3.0.0                 
+//>                 					OpenBrowserWithUrl                   
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 def browserPath = testRunner.testCase.testSuite.project.testSuites["Runner"].testCases["Runner"].testSteps["InputProps"].getPropertyValue("browserPath").replace("\\", "\\\\");

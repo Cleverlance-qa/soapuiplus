@@ -1,6 +1,5 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>                 					DSLooperXLSX
-//>                 					version 3.0.0
+//>                 					Looper - XLSX version
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 import com.eviware.soapui.support.XmlHolder;
@@ -27,7 +26,7 @@ def DS_type = testRunner.testCase.testSteps['DataSources'].getPropertyValue("DSI
 def DSPath;
 def DSPath_xlsx;
 def DSPath2_xlsx;
-def debug_error = context.expand('${#Project#debug_error}');
+def debugMode = context.expand('${#Project#debugMode}');
 // promenne pro kontrolu spravnosti nacteni
 def DSPath_ctrl = "";
 def DSPath2_ctrl = "";
@@ -38,7 +37,7 @@ if (DS.startsWith("DS_envConfig")) {  // env file = NESMI SE ZMENIT NAZEV !!!
 	// kontrola na pocet	
 	def path = (context.expand('${projectDir}') + "/01_DataSources/").replaceAll("\\\\","/");
 	def count = new File(path).listFiles().findAll { it.name ==~ /DS_envConfig.*/ }.size();
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "pocet stejnych 'DS_envConfig.*' = " + count;
 	}
 	
@@ -53,7 +52,7 @@ if (DS.startsWith("DS_envConfig")) {  // env file = NESMI SE ZMENIT NAZEV !!!
 		
 		DSPath_control = ( projRoot + "/01_DataSources/" + DS + "." + DS_type ).replaceAll("\\\\","/");
 		
-		if (debug_error == "true") { 
+		if (debugMode == "true") { 
 			log.info "DSPath_control = " + DSPath_control;
 		}
 		
@@ -73,7 +72,7 @@ if (DS.startsWith("DS_envConfig")) {  // env file = NESMI SE ZMENIT NAZEV !!!
 		}
 
 		testRunner.testCase.setPropertyValue("DSPath", DSPath);
-		if (debug_error == "true") {
+		if (debugMode == "true") {
 			log.info "DSPath (data input file) = " + DSPath;
 		}
 	}
@@ -83,7 +82,7 @@ else { // libovolny nazev data souboru
 	
 	// kontrola na pocet
 	def path = (context.expand('${projectDir}') + "/01_DataSources/").replaceAll("\\\\","/");
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "cesta k datovemu adresari = " + path;
 	}
 	
@@ -91,7 +90,7 @@ else { // libovolny nazev data souboru
 	def prefixPattern = "${prefix}*.*";
 	def count = new File(path).listFiles().findAll { it.name ==~ /${prefixPattern}/ }.size();
 
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "pocet souboru '" + DS + "_" + env2test + "." + DS_type + "' = " + count;
 	}
 	
@@ -131,11 +130,11 @@ if ((DSPath_ctrl == "xlsx") || (DSPath2_ctrl == "xlsx")) {
 	Sheet sh = wb.getSheet(sheetName);
 
 	def rowsCount = sh.getPhysicalNumberOfRows();
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "rowsCount = " + rowsCount;
 	}
 	def colsCount = sh.getRow(0).getLastCellNum();
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "colsCount = " + colsCount;
 	}
 
@@ -149,14 +148,27 @@ if ((DSPath_ctrl == "xlsx") || (DSPath2_ctrl == "xlsx")) {
 		def inputProps = testRunner.testCase.getTestStepByName("InputProps");
 		def looperProps = testRunner.testCase.getTestStepByName("LooperProps");
 		looperProps.setPropertyValue("RowsCount", rowsCount.toString());
-		actualRow = looperProps.getPropertyValue("ActualRow").toString();
-		actualRow = actualRow.toInteger();
 
+		def actualRow;
 		def nextRow;
-		if(actualRow > rowsCount-2 ) {
+		def debugRowNumber;
+		def debugSingleRow = testRunner.testCase.testSuite.project.getPropertyValue("debugSingleRow")
+		
+		if (debugSingleRow.equals("true") && System.getenv("JENKINS_HOME") == null && !DS.contains("envConfig")){
+			evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Dialogs/ChoiceInputDebugRowNumber.groovy").replaceAll("\\\\", "/")));
+			debugRowNumber = testRunner.testCase.getPropertyValue("debugRowNumber");
+			actualRow = debugRowNumber;
+			actualRow = actualRow.toInteger();
+			looperProps.setPropertyValue("ActualRow", debugRowNumber);
+		}
+		else {
+			actualRow = looperProps.getPropertyValue("ActualRow").toString();
+			actualRow = actualRow.toInteger();
+		}
+		if(actualRow > rowsCount-2 || debugSingleRow.equals("true") && System.getenv("JENKINS_HOME") == null && !DS.contains("envConfig")) {
 
-		nextRow = "1";
-		testRunner.testCase.setPropertyValue("nextRow", nextRow);
+			nextRow = "1";
+			testRunner.testCase.setPropertyValue("nextRow", nextRow);
 		}
 		else {
 
@@ -175,13 +187,13 @@ if ((DSPath_ctrl == "xlsx") || (DSPath2_ctrl == "xlsx")) {
 			Row headerCol = sh.getRow(0);
 			Cell headerContent = headerCol.getCell(j);
 			String headerVal = formatter.formatCellValue(headerContent);
-			if (debug_error == "true") {
+			if (debugMode == "true") {
 				log.info headerVal;
 			}
 			Row field = sh.getRow(actualRow);
 			Cell fieldContent = field.getCell(j)
 			String fieldVal = formatter.formatCellValue(fieldContent);
-			if (debug_error == "true") {
+			if (debugMode == "true") {
 				log.info fieldVal;
 			}
 			inputProps.setPropertyValue(headerVal, fieldVal);	
@@ -193,13 +205,17 @@ if ((DSPath_ctrl == "xlsx") || (DSPath2_ctrl == "xlsx")) {
 	nextRow++;
 	log.info "DataSource = " + DS + ", actual row = ${(actualRow)} of ${(rowsCount)-1}";
 	log.info "*******************************************************************************************************************";	
+	
 	looperProps.setPropertyValue("NextRow", nextRow.toString());
 
-	if (actualRow == rowsCount-1) {
+	def pipelineEnvironment = context.expand('${#Global#pipelineEnvironment}');
+	
+	if (actualRow == rowsCount-1 || debugSingleRow.equals("true") && System.getenv("JENKINS_HOME") == null || !pipelineEnvironment.isEmpty() && DS.contains("envConfig")) {
 
 		looperProps.setPropertyValue("StopLoop", "StopLoop");
+		
 	}
-	else if (actualRow==0) {
+	else if (actualRow == 0) {
 
 		def runner = new com.eviware.soapui.impl.wsdl.testcase.WsdlTestCaseRunner(testRunner.testCase, null);
 		looperProps.setPropertyValue("StopLoop", "NextLoop");
