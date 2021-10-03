@@ -1,6 +1,5 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>                 					Evaluation TC            
-//>										version 3.0.0
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestRequestStep;
@@ -18,6 +17,7 @@ def testCaseName = testRunner.testCase.name.toString();
 def testCaseStatus = testRunner.testCase.setPropertyValue("testCaseStatus", "1");
 def assertionName;
 def assertionStatus = "PASS";
+def result = "1i";
 
 
 
@@ -37,6 +37,7 @@ testRunner.testCase.testSuite.getTestCaseList().forEach {
 				if(assertionStatus.startsWith("FAIL")){
 					
 					testCaseStatus = testRunner.testCase.setPropertyValue("testCaseStatus", "-1");
+					result = "-1i";
 				}
 			}
 		}	
@@ -57,21 +58,26 @@ else {
 //def metrics tags and fields 
 def metric = context.expand('${#Project#measurement}');
 def app = context.expand('${#Project#app}');
+def appComponent = context.expand('${#Project#appComponent}');
 def testVariantId = context.expand('${InputProps#testVariantId}');
 def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
 def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
 def testRunId = context.expand('${#Project#testRunId}');
 testCaseStatus = context.expand('${#TestCase#testCaseStatus}');
 
-def String resultMetric;
+String resultMetric = metric + "," \
+					+ "environment=" + env2test + ","\
+					+ "app=" + app + ","\
+					+ "app_comp=" + appComponent + ","\
+					+ "test_variant_id=" + testVariantId + ","\
+					+ "test_variant_desc=" + testVariantDesc + " "\
+					+ "test_case_status=" + "\"" + testCaseStatus + "\"" + ","\
+					+ "result=" + result + ","\
+					+ "test_run_id=" + "\"" + testRunId + "\"";
 
-resultMetric = metric + "," \
-                                 + "app=" + app + ","\
-                                 + "environment=" + env2test + ","\
-                                 + "testVariantId=" + testVariantId + ","\
-                                 + "testVariantDesc=" + testVariantDesc + " "\
-                                 + "testCaseStatus=" + "\"" + testCaseStatus + "\"" + ","\
-                                 + "testRunId=" + "\"" + testRunId + "\"";
+if(appComponent.isEmpty() || appComponent == null) {
+	resultMetric = resultMetric.replace("app_comp=,", "");
+}
 
 log.info "resultMetric = " + resultMetric;
 

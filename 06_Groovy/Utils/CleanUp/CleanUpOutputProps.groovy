@@ -1,6 +1,5 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>                 					CleanUpOutputProps     
-//>										version 3.0.0              
+//>                 					CleanUpOutputProps                   
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 def outputProps = testRunner.testCase.getTestStepByName("OutputProps");

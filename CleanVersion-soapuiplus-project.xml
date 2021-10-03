@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="cb681a6e-93a1-441c-a969-0caab846c5c5" activeEnvironment="Default" name="CleanVersion" resourceRoot="${projectDir}" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" encryptionMode="Not encrypted" updated="2.6.0 2019-01-14T14:47:06Z" xmlns:con="http://eviware.com/soapui/config"><con:description>SoapUIplus version - 3.0.1</con:description><con:settings><con:setting id="ProjectSettings@shadowPassword"/></con:settings><con:testSuite id="2f5d8a07-6b28-4d06-9973-023fc1118020" name="Runner"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="c7f1f636-23aa-4597-815a-952ae1a4dca0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Runner" searchProperties="true"><con:settings/><con:testStep type="properties" name="DataSources" id="7c0ad800-6d4c-4ff2-b367-4d37fedbf56f"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>DSInput</con:name><con:value>DS_envConfig</con:value></con:property><con:property><con:name>DSInputType</con:name><con:value>xlsx</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="DSLooper" id="68c92ecc-1b5a-462d-b5c5-a08db25e7a42"><con:settings/><con:config><script>/*
+<con:soapui-project id="cb681a6e-93a1-441c-a969-0caab846c5c5" activeEnvironment="Default" name="CleanVersion" resourceRoot="${projectDir}" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" encryptionMode="Not encrypted" updated="2.6.0 2019-01-14T14:47:06Z" xmlns:con="http://eviware.com/soapui/config"><con:description>SoapUIplus version - 3.8.1</con:description><con:settings><con:setting id="ProjectSettings@shadowPassword"/></con:settings><con:testSuite id="2f5d8a07-6b28-4d06-9973-023fc1118020" name="Runner"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="c7f1f636-23aa-4597-815a-952ae1a4dca0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Runner" searchProperties="true"><con:settings/><con:testStep type="properties" name="DataSources" id="7c0ad800-6d4c-4ff2-b367-4d37fedbf56f"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>DSInput</con:name><con:value>DS_envConfig</con:value></con:property><con:property><con:name>DSInputType</con:name><con:value>xlsx</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="DSLooper" id="68c92ecc-1b5a-462d-b5c5-a08db25e7a42"><con:settings/><con:config><script>/*
 MISTO PRO NACTENI VLASTNI FUNKCE
 */
 // GetCorrelationId - VZOR
 //evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/GetData/GetCorrelationId.groovy").replaceAll("\\\\","/")))
 
-def debug_error = context.expand('${#Project#debug_error}');
+def debugMode = context.expand('${#Project#debugMode}');
 def dsInputType = testRunner.testCase.testSteps['DataSources'].getPropertyValue("dsInputType"); 
 
-if (debug_error == "true"){
+if (debugMode == "true"){
 	log.info "************************************************"
 	log.info "dsInputType = " + dsInputType
 	log.info "************************************************"
@@ -24,30 +24,13 @@ if(dsInputType == "xls"){
 	//DSLooper
 	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLooperXLS.groovy").replaceAll("\\\\","/")))
 }
-</script></con:config></con:testStep><con:testStep type="properties" name="LooperProps" id="31fb292a-2bdb-474a-bf6d-a7189e2e7f0e"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>RowsCount</con:name><con:value>2</con:value></con:property><con:property><con:name>ActualRow</con:name><con:value>1</con:value></con:property><con:property><con:name>NextRow</con:name><con:value>2</con:value></con:property><con:property><con:name>StopLoop</con:name><con:value>StopLoop</con:value></con:property><con:property><con:name>LoopsCount</con:name><con:value>0</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="InputProps" id="bf673cf9-ab35-4d54-9bef-e1c5299143ed"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>env2test</con:name><con:value>TEST</con:value></con:property><con:property><con:name>host</con:name><con:value>https://test.clv.cz</con:value></con:property><con:property><con:name>measurement</con:name><con:value>test_measurement</con:value></con:property><con:property><con:name>app</con:name><con:value>test_app</con:value></con:property><con:property><con:name>browserPath</con:name><con:value>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</con:value></con:property><con:property><con:name>sendMetrics</con:name><con:value>false</con:value></con:property><con:property><con:name>telegrafUrl</con:name><con:value>https://qatick.clance.local/telegraf</con:value></con:property><con:property><con:name>writeFailReqRspOnly</con:name><con:value>true</con:value></con:property><con:property><con:name>debug_error</con:name><con:value>false</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="Runner" id="f90ce74f-5671-4621-b36c-e5b98856c9eb"><con:settings/><con:config><script>//cleanUp project props
-evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/CleanUp/CleanUpProjectProps.groovy").replaceAll("\\\\","/")))
-
-//get testRunId for test - NEW version
-evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/GetData/GetTestRunId.groovy").replaceAll("\\\\","/")))
-
-//get ds values and set as project props
-def inputProps = testRunner.testCase.testSteps["InputProps"];
-
-for (prop in inputProps.getPropertyList()) {
-	def propName = prop.getName();
-	def propVal = prop.getValue();
-	testRunner.testCase.testSuite.project.setPropertyValue(propName, propVal);
-}
-
-//run testSuite Execution
-def project = testRunner.testCase.testSuite.project;
-def runner = project.testSuites['Execution'].run(null, true);
-
-runner.waitUntilFinished();
-</script></con:config></con:testStep><con:testStep type="groovy" name="DSLoop" id="dbbbc614-8c7c-4396-b6b9-23774fcbbb1c"><con:settings/><con:config><script>//DSLoop
+</script></con:config></con:testStep><con:testStep type="properties" name="LooperProps" id="31fb292a-2bdb-474a-bf6d-a7189e2e7f0e"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>RowsCount</con:name><con:value>2</con:value></con:property><con:property><con:name>ActualRow</con:name><con:value>1</con:value></con:property><con:property><con:name>NextRow</con:name><con:value>2</con:value></con:property><con:property><con:name>StopLoop</con:name><con:value>StopLoop</con:value></con:property><con:property><con:name>LoopsCount</con:name><con:value>0</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="InputProps" id="bf673cf9-ab35-4d54-9bef-e1c5299143ed"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>env2test</con:name><con:value>TEST</con:value></con:property><con:property><con:name>host</con:name><con:value>https://test.clv.cz</con:value></con:property><con:property><con:name>measurement</con:name><con:value>test_measurement_mze</con:value></con:property><con:property><con:name>app</con:name><con:value>test_app</con:value></con:property><con:property><con:name>appComponent</con:name><con:value>test_comp</con:value></con:property><con:property><con:name>browserPath</con:name><con:value>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</con:value></con:property><con:property><con:name>sendMetrics</con:name><con:value>false</con:value></con:property><con:property><con:name>telegrafUrl</con:name><con:value>https://qatick.clance.local/telegraf</con:value></con:property><con:property><con:name>sendResults</con:name><con:value>false</con:value></con:property><con:property><con:name>xrayUrl</con:name><con:value>https://jira.cleverlance.com/rest/raven/1.0/import/execution</con:value></con:property><con:property><con:name>xrayTestExecKeyMaster</con:name><con:value>n/a</con:value></con:property><con:property><con:name>writeFailReqRspOnly</con:name><con:value>true</con:value></con:property><con:property><con:name>debug_error</con:name><con:value>false</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="Runner" id="f90ce74f-5671-4621-b36c-e5b98856c9eb"><con:settings/><con:config><script>//call Runner
+evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Runner/Runner.groovy").replaceAll("\\\\","/")));</script></con:config></con:testStep><con:testStep type="groovy" name="DSLoop" id="dbbbc614-8c7c-4396-b6b9-23774fcbbb1c"><con:settings/><con:config><script>//DSLoop
 evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLoop.groovy").replaceAll("\\\\","/")))</script></con:config></con:testStep><con:testStep type="groovy" name="Evaluation" id="68b90d80-f18a-4332-aeb9-7e4eb664e128" disabled="true"><con:settings/><con:config><script>//Evaluation
 evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Evaluation/Evaluation.groovy").replaceAll("\\\\","/")))
-</script></con:config></con:testStep><con:testStep type="httprequest" name="Post2telegraf" id="9bf3d041-befe-443c-8e3a-56c96115cef9" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d447e27b-82e9-41fe-8637-45b1260eef36" name="Post2telegraf" postQueryString="false" mediaType="application/xml" downloadIncludedResources="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#telegrafUrl}</con:endpoint><con:request>${#TestSuite#metric_1}
+</script></con:config></con:testStep><con:testStep type="groovy" name="EvaluationDB" id="247b9faf-53b5-4c71-93fb-fe46b3ab15d7" disabled="true"><con:settings/><con:config><script>//EvaluationDB
+evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Evaluation/EvaluationDB.groovy").replaceAll("\\\\","/")))
+</script></con:config></con:testStep><con:testStep type="httprequest" name="Post2telegraf" id="d5f0d5bf-551e-49e3-b70f-ba6ce698a6da" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d447e27b-82e9-41fe-8637-45b1260eef36" name="Post2telegraf" postQueryString="false" mediaType="application/xml" downloadIncludedResources="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#telegrafUrl}</con:endpoint><con:request>${#TestSuite#metric_1}
 ${#TestSuite#metric_2}
 ${#TestSuite#metric_3}
 ${#TestSuite#metric_4}
@@ -146,8 +129,21 @@ ${#TestSuite#metric_96}
 ${#TestSuite#metric_97}
 ${#TestSuite#metric_98}
 ${#TestSuite#metric_99}
-${#TestSuite#metric_100}</con:request><con:assertion type="Valid HTTP Status Codes" id="5693e020-c2fe-471b-af84-9bf9c6b33585" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>204</codes></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:setupScript>//cleanUp InputProps
-evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/CleanUp/CleanUpInputProps.groovy").replaceAll("\\\\","/")));</con:setupScript><con:properties><con:property><con:name>DSPath</con:name><con:value>C:/Users/MZ/Desktop/soapuiplus-3.0/01_DataSources/DS_envConfig.xlsx</con:value></con:property><con:property><con:name>nextRow</con:name><con:value>1</con:value></con:property><con:property><con:name>randStr</con:name><con:value>b4HKuQMJyH</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>TimedOut</con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:setupScript/><con:reportParameters/></con:testSuite><con:testSuite id="f1b183a1-dc79-4206-a7e8-305bffa474dd" name="Execution" disabled="true"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="abd3a132-6536-467f-8a52-2eaf9de2a341" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="properties" name="DataSources" id="dd550280-e63b-41e6-83a0-56aba2488574"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>DSInput</con:name><con:value>DS_cleanVersion</con:value></con:property><con:property><con:name>DSOutput</con:name><con:value>Results_cleanVersion</con:value></con:property><con:property><con:name>DSInputType</con:name><con:value>xlsx</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="DSLooper" id="c602dc98-9e1f-480e-81e6-fc67dba266df"><con:settings/><con:config><script>/*
+${#TestSuite#metric_100}</con:request><con:assertion type="Valid HTTP Status Codes" id="5693e020-c2fe-471b-af84-9bf9c6b33585" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>204</codes></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Post2xray" id="9b9078e2-c879-4e90-a716-a332975f75e6" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d447e27b-82e9-41fe-8637-45b1260eef36" name="Post2xray" postQueryString="false" mediaType="application/json" downloadIncludedResources="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#xrayUrl}</con:endpoint><con:request>{
+    "testExecutionKey": "${InputProps#xrayTestExecKey}",
+    "info" : {
+        "summary" : "api-import",
+        "description" : "api-import",
+        "testEnvironments": ["${#Project#env2test}"]
+    },
+    "tests" : [
+        {
+            "testKey" : "${InputProps#xrayTestKey}",
+            "status" : "${#TestCase#testCaseResult}"
+        }
+     ]
+}</con:request><con:assertion type="Valid HTTP Status Codes" id="5693e020-c2fe-471b-af84-9bf9c6b33585" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>204</codes></con:configuration></con:assertion><con:credentials><con:username/><con:password/><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:preemptive>true</con:preemptive><con:authType>Preemptive</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:setupScript>//cleanUp InputProps
+evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/CleanUp/CleanUpInputProps.groovy").replaceAll("\\\\","/")));</con:setupScript><con:properties><con:property><con:name>DSPath</con:name><con:value>D:/01_WORK/01_Actual_work/01_CLV/01_Projects/01_CAT/01_Github/soapuiplus-3.0/01_DataSources/DS_envConfig.xlsx</con:value></con:property><con:property><con:name>nextRow</con:name><con:value>1</con:value></con:property><con:property><con:name>randStr</con:name><con:value>b4HKuQMJyH</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>TimedOut</con:value></con:property><con:property><con:name>debugRowNumber</con:name><con:value>1</con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:setupScript/><con:reportParameters/></con:testSuite><con:testSuite id="f1b183a1-dc79-4206-a7e8-305bffa474dd" name="Execution" disabled="true"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="abd3a132-6536-467f-8a52-2eaf9de2a341" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="properties" name="DataSources" id="dd550280-e63b-41e6-83a0-56aba2488574"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>DSInput</con:name><con:value>DS_cleanVersion</con:value></con:property><con:property><con:name>DSOutput</con:name><con:value>Results_cleanVersion</con:value></con:property><con:property><con:name>DSInputType</con:name><con:value>xlsx</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="DSLooper" id="c602dc98-9e1f-480e-81e6-fc67dba266df"><con:settings/><con:config><script>/*
 MISTO PRO NACTENI VLASTNI FUNKCE
 */
 // GetCorrelationId - VZOR
@@ -155,10 +151,10 @@ evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/U
 //log.info "************************************************"
 
 //DSLooper
-def debug_error = context.expand('${#Project#debug_error}');
+def debugMode = context.expand('${#Project#debugMode}');
 def dsInputType = testRunner.testCase.testSteps['DataSources'].getPropertyValue("dsInputType"); 
 
-if (debug_error == "true"){
+if (debugMode == "true"){
 	log.info "************************************************"
 	log.info "dsInputType = " + dsInputType
 	log.info "************************************************"
@@ -174,7 +170,7 @@ if(dsInputType == "xls"){
 	//DSLooper
 	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Looper/DSLooperXLS.groovy").replaceAll("\\\\","/")))
 }
-</script></con:config></con:testStep><con:testStep type="properties" name="LooperProps" id="cb51f3ec-e6c3-4db0-9553-e2e5ac6793be"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>RowsCount</con:name><con:value>2</con:value></con:property><con:property><con:name>ActualRow</con:name><con:value>1</con:value></con:property><con:property><con:name>NextRow</con:name><con:value>2</con:value></con:property><con:property><con:name>StopLoop</con:name><con:value>StopLoop</con:value></con:property><con:property><con:name>LoopsCount</con:name><con:value>0</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="InputProps" id="0431ee70-3da7-4ed9-825b-64775714b35f"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcId</con:name><con:value>1</con:value></con:property><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>tcDesc</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>dsVal1</con:name><con:value/></con:property><con:property><con:name>dsVal2</con:name><con:value/></con:property><con:property><con:name>dsVal3</con:name><con:value/></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="OutputProps" id="334ab4ec-5baf-4530-a7bb-375953a53199"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>200</con:value></con:property><con:property><con:name>rspAssertsStatus</con:name><con:value>1</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="WriteOutputs" id="47982b2b-d77a-4282-b133-8bc1ae7d3f88"><con:settings/><con:config><script>log.info "*******************************WRITTEN VALUES******************************"
+</script></con:config></con:testStep><con:testStep type="properties" name="LooperProps" id="cb51f3ec-e6c3-4db0-9553-e2e5ac6793be"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>RowsCount</con:name><con:value>2</con:value></con:property><con:property><con:name>ActualRow</con:name><con:value>1</con:value></con:property><con:property><con:name>NextRow</con:name><con:value>2</con:value></con:property><con:property><con:name>StopLoop</con:name><con:value>StopLoop</con:value></con:property><con:property><con:name>LoopsCount</con:name><con:value>0</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="InputProps" id="0431ee70-3da7-4ed9-825b-64775714b35f"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcId</con:name><con:value>1</con:value></con:property><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>tcDesc</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>xrayTestExecKey</con:name><con:value>n/a</con:value></con:property><con:property><con:name>xrayTestKey</con:name><con:value>n/a</con:value></con:property><con:property><con:name>dsVal1</con:name><con:value/></con:property><con:property><con:name>dsVal2</con:name><con:value/></con:property><con:property><con:name>dsVal3</con:name><con:value/></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="OutputProps" id="334ab4ec-5baf-4530-a7bb-375953a53199"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>tcName</con:name><con:value>testCase1</con:value></con:property><con:property><con:name>testVariantId</con:name><con:value>TC01TV01</con:value></con:property><con:property><con:name>testVariantDesc</con:name><con:value>varianta_1</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>200</con:value></con:property><con:property><con:name>rspAssertsStatus</con:name><con:value>1</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="WriteOutputs" id="47982b2b-d77a-4282-b133-8bc1ae7d3f88"><con:settings/><con:config><script>log.info "*******************************WRITTEN VALUES******************************"
 
 def tcName = context.expand('${InputProps#tcName}');
 log.info "tcName = " + tcName;
@@ -218,190 +214,32 @@ evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/U
 def sendMetrics = context.expand('${#Project#sendMetrics}');
 
 if (sendMetrics.equals("true")) {
-
-	//GetMetrics
+	
 	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/PostMetrics/GetMetrics.groovy").replaceAll("\\\\","/")));
 	
-	//Post2telegraf
+	// Post2telegraf
 	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/PostMetrics/Post2telegraf.groovy").replaceAll("\\\\","/")));
 }
 else {
 	
 	log.info "Results were not sent to Grafana (InfluxDB)";  
 }
-</con:tearDownScript><con:properties><con:property><con:name>nextRow</con:name><con:value>1</con:value></con:property><con:property><con:name>DSPath</con:name><con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">C:/Users/MZ/Desktop/soapuiplus-3.0/01_DataSources/DS_cleanVersion_TEST.xlsx</con:value></con:property><con:property><con:name>rspAssertsStatus</con:name><con:value>1</con:value></con:property><con:property><con:name>randStr</con:name><con:value>jZbmlKnv9j</con:value></con:property><con:property><con:name>reqCorrelationId</con:name><con:value>c560366805161521828960155</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>200</con:value></con:property><con:property><con:name>rawRequest</con:name><con:value>POST ${#Project#telegrafUrl}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</con:value></con:property><con:property><con:name>rawResponse</con:name><con:value><![CDATA[Keep-Alive : timeout=60, max=100
-X-HP-CAM-COLOR : V=1;ServerAddr=vWfaTyTx4tizwsSMH4inXg==;GUID=1|M53J2C0ef9-IectOzM312qeJ9rpuoag8N-MIvaWOEHapqKHz9-Xq3KnvRM6ohIuuK4qw22djHXg4sjrhqKWgPs8IwlL0DyUEl3oIsquCnQ0.|L0ZYUy0xLjAtV1Mvc2VydmljZXMvRlhMaXN0V1M.
-Connection : Keep-Alive
-#status# : HTTP/1.1 200 OK
-Content-Length : 1926
-Date : Sun, 29 Mar 2020 11:01:06 GMT
-Content-Language : en-US
-X-Powered-By : Servlet/3.0
-Content-Type : text/xml; charset=UTF-8
-
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-   <soapenv:Header>
-      <s:Security soapenv:mustUnderstand="1" xmlns:s="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:w1="http://www.ibm.com/websphere/appserver/tokentype/5.0.2">
-         <s:BinarySecurityToken ValueType="w1:LTPA" u:Id="ltpa_20">if52PD7kYTXKJAmDyiMjzS3zGKc4N/Y0giq+sMOG3N/PdAkWHqPrHyOwEWuxH7gYiaQIf5SM7MKDPWof52GxxYzfN2NzlRpEQj29okgFPrZQ+Nd7QKZKmHtpsEULwEa1qhyXVWS/JkrrIX+pl2GksXIW4txCpvb4eqYlIiUSozfqi7vUGCtLmX1sutYb5l+OeDZ0DRdsUmlvjgUOVEmzS/z+DyKw29dxPGpHaXGwd3QubJcvZzCxhzICc1NgzDJswyGJyNLa6gEaUkTKGzL64pafSGePVAP9SYBah4ok2cY=</s:BinarySecurityToken>
-      </s:Security>
-   </soapenv:Header>
-   <soapenv:Body>
-      <ns2:getCurrentRateResponse xmlns="http://dto.service.fxlist.kb.cz" xmlns:ns2="http://service.fxlist.kb.cz" xmlns:ns3="http://exception.service.fxlist.kb.cz" xmlns:ns4="http://sharedcontext.gdf4j.kb.cz/2/0">
-         <ns2:getCurrentRateReturn>
-            <status xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <validDate>2020-03-24T07:00:00+01:00</validDate>
-            <cashBuy>0</cashBuy>
-            <cashSell>0</cashSell>
-            <conversionDirection xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <currencyISO>EUR</currencyISO>
-            <currencyLocales>
-               <ns2:CurrencyLocaleVO>
-                  <name>euro</name>
-                  <state>Evropská unie</state>
-                  <fullName>euro</fullName>
-               </ns2:CurrencyLocaleVO>
-               <ns2:CurrencyLocaleVO>
-                  <name>euro</name>
-                  <state>Európska únia</state>
-                  <fullName>euro</fullName>
-               </ns2:CurrencyLocaleVO>
-            </currencyLocales>
-            <currencyUnit>1</currencyUnit>
-            <decimalPoints>2</decimalPoints>
-            <middle>27.7666</middle>
-            <nonCashBuy>27.2556</nonCashBuy>
-            <nonCashSell>28.383</nonCashSell>
-            <stateISO>EU</stateISO>
-            <obsolete>false</obsolete>
-         </ns2:getCurrentRateReturn>
-      </ns2:getCurrentRateResponse>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:value></con:property><con:property><con:name>reqRaw</con:name><con:value>GET https://api.kb.cz/openapi/v1/exchange-rates HTTP/1.1
-Accept-Encoding: gzip,deflate
-x-request-id: 785552
-Host: api.kb.cz
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.1.1 (java 1.5)
-</con:value></con:property><con:property><con:name>rspRaw</con:name><con:value>HTTP/1.1 200 OK
-Date: Wed, 24 Jun 2020 09:45:22 GMT
-x-request-id: 785552
-x-response-id: urn:uuid:874a8053-d929-4b21-830d-920a75212544
-X-Original-HTTP-Status-Code: 200
-X-HP-CAM-COLOR: V=1;ServerAddr=9pjZX4F/2G5B42S39H/kiA==;GUID=1|IZ4TvuOtH2Ne95LH8DWqonUoB1P4e3zDRoj70ESPTWU11qFVNlEwywxniMsZjSXLBezF-SVOqBGCmomoI0KNbrK4WIKW7johFj9dupfhQ24.|L0ZYUy0xLjAtV1Mvc2VydmljZXMvRlhMaXN0V1M.
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: GET
-Access-Control-Allow-Headers: authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction
-Content-Language: cs
-Content-Type: application/json; charset=utf-8
-Keep-Alive: timeout=60, max=10000
-Connection: Keep-Alive
-Strict-Transport-Security: max-age=16070400; includeSubDomains
-Set-Cookie: TS01dfc955=01b8c95dc8ddad5dcd55454119d6efd6b8955f286c00275160aaeb7cbc412fb6ef676c447fc80ee4a504688641afdce1407ce1351b; Path=/; Domain=.api.kb.cz
-Transfer-Encoding: chunked
-
-[{"exchangeRates":[{"currencyISO":"AUD","currencyShortName":"dolar","currencyFullName":"australskĂ˝ dolar","country":"AustrĂˇlie","countryISO":"AU","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":16.3549,"cashBuy":15.8724,"cashSell":16.8374,"noncashBuy":15.9051,"noncashSell":16.8047},{"currencyISO":"BGN","currencyShortName":"lev","currencyFullName":"lev","country":"Bulharsko","countryISO":"BG","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":13.6084,"cashBuy":0,"cashSell":0,"noncashBuy":13.2342,"noncashSell":13.9826},{"currencyISO":"CAD","currencyShortName":"dolar","currencyFullName":"kanadskĂ˝ dolar","country":"Kanada","countryISO":"CA","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":17.3719,"cashBuy":16.8594,"cashSell":17.8844,"noncashBuy":16.8942,"noncashSell":17.8496},{"currencyISO":"CHF","currencyShortName":"frank","currencyFullName":"ĹˇvĂ˝carskĂ˝ frank","country":"Ĺ vĂ˝carsko","countryISO":"CH","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":24.8934,"cashBuy":24.1391,"cashSell":25.6477,"noncashBuy":24.2088,"noncashSell":25.578},{"currencyISO":"CNY","currencyShortName":"juan","currencyFullName":"juan","country":"ÄŚĂ­na","countryISO":"CN","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":3.3241,"cashBuy":0,"cashSell":0,"noncashBuy":3.1579,"noncashSell":3.4903},{"currencyISO":"DKK","currencyShortName":"koruna","currencyFullName":"dĂˇnskĂˇ koruna","country":"DĂˇnsko","countryISO":"DK","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":3.5709,"cashBuy":3.4656,"cashSell":3.6762,"noncashBuy":3.4727,"noncashSell":3.6691},{"currencyISO":"EUR","currencyShortName":"euro","currencyFullName":"euro","country":"EvropskĂˇ unie","countryISO":"EU","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":26.6161,"cashBuy":25.8309,"cashSell":27.4012,"noncashBuy":25.8921,"noncashSell":27.34},{"currencyISO":"GBP","currencyShortName":"libra","currencyFullName":"britskĂˇ libra","country":"SpojenĂ© krĂˇlovstvĂ­","countryISO":"GB","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":29.3759,"cashBuy":28.5093,"cashSell":30.2425,"noncashBuy":28.5681,"noncashSell":30.1837},{"currencyISO":"HRK","currencyShortName":"kuna","currencyFullName":"kuna","country":"Chorvatsko","countryISO":"HR","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":3.5133,"cashBuy":3.4097,"cashSell":3.6169,"noncashBuy":3.4167,"noncashSell":3.6099},{"currencyISO":"HUF","currencyShortName":"forint","currencyFullName":"forint","country":"MaÄŹarsko","countryISO":"HU","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":100,"middle":7.62,"cashBuy":0,"cashSell":0,"noncashBuy":7.4105,"noncashSell":7.8296},{"currencyISO":"JPY","currencyShortName":"jen","currencyFullName":"japonskĂ˝ jen","country":"Japonsko","countryISO":"JP","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":100,"middle":22.12,"cashBuy":21.4498,"cashSell":22.7902,"noncashBuy":21.4785,"noncashSell":22.7615},{"currencyISO":"NOK","currencyShortName":"koruna","currencyFullName":"norskĂˇ koruna","country":"Norsko","countryISO":"NO","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":2.4788,"cashBuy":2.4057,"cashSell":2.5519,"noncashBuy":2.4106,"noncashSell":2.547},{"currencyISO":"PLN","currencyShortName":"zloty","currencyFullName":"zloty","country":"Polsko","countryISO":"PL","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":5.9862,"cashBuy":5.8096,"cashSell":6.1628,"noncashBuy":5.8216,"noncashSell":6.1508},{"currencyISO":"RON","currencyShortName":"leu","currencyFullName":"leu","country":"Rumunsko","countryISO":"RO","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":5.4941,"cashBuy":0,"cashSell":0,"noncashBuy":5.343,"noncashSell":5.6452},{"currencyISO":"RUB","currencyShortName":"rubl","currencyFullName":"rubl","country":"Rusko","countryISO":"RU","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":100,"middle":34.2,"cashBuy":30.78,"cashSell":37.62,"noncashBuy":32.49,"noncashSell":35.91},{"currencyISO":"SEK","currencyShortName":"koruna","currencyFullName":"ĹˇvĂ©dskĂˇ koruna","country":"Ĺ vĂ©dsko","countryISO":"SE","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":2.5339,"cashBuy":2.4591,"cashSell":2.6087,"noncashBuy":2.4642,"noncashSell":2.6036},{"currencyISO":"TRY","currencyShortName":"lira","currencyFullName":"novĂˇ tureckĂˇ lira","country":"Turecko","countryISO":"TR","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":3.4265,"cashBuy":0,"cashSell":0,"noncashBuy":3.3323,"noncashSell":3.5207},{"currencyISO":"USD","currencyShortName":"dolar","currencyFullName":"americkĂ˝ dolar","country":"SpojenĂ© stĂˇty","countryISO":"US","ratesValidityDate":"2020-06-24T05:00:00.000Z","currencyUnit":1,"middle":23.4677,"cashBuy":22.7754,"cashSell":24.16,"noncashBuy":22.8223,"noncashSell":24.1131}]}]</con:value></con:property><con:property><con:name>testCaseResult</con:name><con:value>PASS</con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:setupScript>def env2test  = context.expand ('${#Project#env2test}');
+//Send results to xray?
+def sendResults = context.expand('${#Project#sendResults}');
+ 
+if (sendResults.equals("true")) {
+     
+	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/PostResults/GetResults.groovy").replaceAll("\\\\","/")));
+	
+	// Post2telegraf
+	evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/PostResults/Post2xray.groovy").replaceAll("\\\\","/")));
+}
+else {
+ 
+    log.info "Results were not sent to Xray (Jira)";  
+}
+</con:tearDownScript><con:properties><con:property><con:name>nextRow</con:name><con:value>1</con:value></con:property><con:property><con:name>DSPath</con:name><con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">D:/01_WORK/01_Actual_work/01_CLV/01_Projects/01_CAT/01_Github/soapuiplus-3.0/01_DataSources/DS_cleanVersion_TEST.xlsx</con:value></con:property><con:property><con:name>rspAssertsStatus</con:name><con:value>1</con:value></con:property><con:property><con:name>randStr</con:name><con:value>2UKTSvmFMV</con:value></con:property><con:property><con:name>reqCorrelationId</con:name><con:value>c031523368886521207825801</con:value></con:property><con:property><con:name>rspStatusCode</con:name><con:value>200</con:value></con:property><con:property><con:name>rawRequest</con:name><con:value/></con:property><con:property><con:name>rawResponse</con:name><con:value/></con:property><con:property><con:name>reqRaw</con:name><con:value/></con:property><con:property><con:name>rspRaw</con:name><con:value/></con:property><con:property><con:name>testCaseResult</con:name><con:value/></con:property><con:property><con:name>debugRowNumber</con:name><con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">6</con:value></con:property><con:property><con:name>testCaseStatus</con:name><con:value>1</con:value></con:property><con:property><con:name>dbCon</con:name><con:value/></con:property><con:property><con:name>kafkaMessageSendCheck</con:name><con:value>1</con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:setupScript>def env2test  = context.expand ('${#Project#env2test}');
 
 log.info "****************************************RUN ON ENVIRONMENT " + env2test + "****************************************";
-log.info "******************************************************************************************************************";</con:setupScript><con:tearDownScript/><con:reportParameters/></con:testSuite><con:savedRecentRuns>1</con:savedRecentRuns><con:properties><con:property><con:name>testRunId</con:name><con:value>2020-10-30 12:41:801</con:value></con:property><con:property><con:name>env2test</con:name><con:value>TEST</con:value></con:property><con:property><con:name>host</con:name><con:value>https://test.clv.cz</con:value></con:property><con:property><con:name>measurement</con:name><con:value>test_measurement</con:value></con:property><con:property><con:name>app</con:name><con:value>test_app</con:value></con:property><con:property><con:name>browserPath</con:name><con:value>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</con:value></con:property><con:property><con:name>sendMetrics</con:name><con:value>false</con:value></con:property><con:property><con:name>telegrafUrl</con:name><con:value>https://qatick.clance.local/telegraf</con:value></con:property><con:property><con:name>writeFailReqRspOnly</con:name><con:value>true</con:value></con:property><con:property><con:name>debug_error</con:name><con:value>false</con:value></con:property></con:properties><con:wssContainer/><con:databaseConnectionContainer/><con:jmsConnectionContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/><con:authRepository/><con:tags/></con:soapui-project>
+log.info "******************************************************************************************************************";</con:setupScript><con:tearDownScript/><con:reportParameters/></con:testSuite><con:savedRecentRuns>1</con:savedRecentRuns><con:properties><con:property><con:name>testRunId</con:name><con:value>2021-10-03 13:56:535</con:value></con:property><con:property><con:name>env2test</con:name><con:value>TEST</con:value></con:property><con:property><con:name>host</con:name><con:value>https://test.clv.cz</con:value></con:property><con:property><con:name>measurement</con:name><con:value>test_measurement_mze</con:value></con:property><con:property><con:name>app</con:name><con:value>test_app</con:value></con:property><con:property><con:name>appComponent</con:name><con:value>test_comp</con:value></con:property><con:property><con:name>browserPath</con:name><con:value>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</con:value></con:property><con:property><con:name>sendMetrics</con:name><con:value>false</con:value></con:property><con:property><con:name>telegrafUrl</con:name><con:value>https://qatick.clance.local/telegraf</con:value></con:property><con:property><con:name>sendResults</con:name><con:value>false</con:value></con:property><con:property><con:name>xrayUrl</con:name><con:value>https://jira.cleverlance.com/rest/raven/1.0/import/execution</con:value></con:property><con:property><con:name>xrayTestExecKeyMaster</con:name><con:value>n/a</con:value></con:property><con:property><con:name>writeFailReqRspOnly</con:name><con:value>true</con:value></con:property><con:property><con:name>debug_error</con:name><con:value>false</con:value></con:property></con:properties><con:wssContainer/><con:databaseConnectionContainer/><con:jmsConnectionContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/><con:authRepository/><con:tags/></con:soapui-project>

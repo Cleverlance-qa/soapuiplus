@@ -1,6 +1,5 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>                 					Evaluation DB                   
-//>										version 3.0.0
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 import org.apache.commons.io.FileUtils;
@@ -26,15 +25,18 @@ log.info "dbRsp = " + dbRsp;
 
 //set response status code
 def rspStatusCode;
+def rspAssertsStatus;
+def status;
+def result;
 
 if (dbRsp.startsWith("<Results>")) {
-
-	rspStatusCode = "OK";
+	
+	rspStatusCode = "200";
 	log.info "rspStatusCode =" +  rspStatusCode;
 }
 else {
-
-	rspStatusCode = "FAILED";
+	
+	rspStatusCode = "500";
 	log.info "rspStatusCode =" +  rspStatusCode;
 }
 
@@ -49,7 +51,6 @@ if(!rspStatusCode.startsWith("x")) {
 	File directory = new File(projRoot + "/03_Requests_Responses/" + env2test);
 	
 	if (!directory.exists()) {
-	
 		directory.mkdir();	
 	}
 
@@ -90,6 +91,7 @@ if(!rspStatusCode.startsWith("x")) {
 }
 
 //check assertion status
+rspAssertsStatus = "1";
 testRunner.testCase.setPropertyValue("rspAssertsStatus", "1");
 
 obj = context.testCase.getTestStepByName(stepName);
@@ -101,44 +103,59 @@ assertions.each {
 
 	//assert status is failed or unknown set assert status as failed
 	if(status.startsWith("FAIL")) {
-	
-		log.info "ASSERTS FAILED";
+		
+		rspAssertsStatus = "-1"
 		testRunner.testCase.setPropertyValue("rspAssertsStatus", "-1");
+		log.info "ASSERTS FAILED";
 	}
+}
+
+//set result
+if(rspStatusCode.startsWith("20") && rspAssertsStatus.equals("1")) {
+
+	result = "1i";
+}
+else {
+	
+	result = "-1i";
 }
 
 //def metrics tags and fields 
 def metric = context.expand('${#Project#measurement}');
 def app = context.expand('${#Project#app}');
-def endpoint = context.expand('${#TestCase#dbCon}');
-def String host = endpoint.split("@")[1];
+def appComponent = context.expand('${#Project#appComponent}');
+def endpoint = (context.expand('${#TestCase#dbCon}').toLowerCase().contains("postgre")) ? context.expand('${#TestCase#dbCon}').split("\\?")[0] : context.expand('${#TestCase#dbCon}')
+String host = (context.expand('${#TestCase#dbCon}').toLowerCase().contains("postgre")) ? endpoint.split("\\?")[0].split("/")[2] : endpoint.split("@")[1]
 def tcId = context.expand('${InputProps#tcId}');
 def tcName = context.expand('${InputProps#tcName}');
 def tcDesc = context.expand('${InputProps#tcDesc}');
 def testVariantId = context.expand('${InputProps#testVariantId}');
 def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
-def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
 def testRunId = context.expand('${#Project#testRunId}');
 
-def String resultMetric;
+String resultMetric = metric + "," \
+					+ "environment=" + env2test + ","\
+					+ "host=" + host + ","\
+					+ "endpoint=" + endpoint + ","\
+					+ "app=" + app + ","\
+					+ "app_comp=" + appComponent + ","\
+					+ "tc_id=" + tcId + ","\
+					+ "tc_name=" + tcName + ","\
+					+ "tc_desc=" + tcDesc + ","\
+					+ "test_variant_id=" + testVariantId + ","\
+					+ "test_variant_desc=" + testVariantDesc + ","\
+					+ "test_step_name=" + stepName + " "\
+					+ "rsp_status_code=" + "\"" + rspStatusCode + "\"" + ","\
+					+ "rsp_asserts_status=" + "\"" + rspAssertsStatus + "\"" + ","\
+					+ "result=" + result + ","\
+					+ "rand_str=" + "\"" + randStr + "\"" + ","\
+					+ "test_run_id=" + "\"" + testRunId + "\"" + ","\
+					+ "req_exec_date_time=" + "\"" + reqExecDateTime + "\"" + ","\
+					+ "rsp_time_taken=" + "\"" + rspTimeTaken + "\"";
 
-resultMetric = metric + "," \
-	               + "app=" + app + ","\
-	               + "environment=" + env2test + ","\
-	               + "host=" + host + ","\
-	               + "endpoint=" + endpoint + ","\
-	               + "tcId=" + tcId + ","\
-	               + "tcName=" + tcName + ","\
-	               + "tcDesc=" + tcDesc + ","\
-	               + "tvId=" + testVariantId + ","\
-	               + "tvDesc=" + testVariantDesc + ","\
-	               + "testStepName=" + stepName + " "\
-	               + "rsp_statusCode=" + "\"" + rspStatusCode + "\"" + ","\
-	               + "rsp_assertsStatus=" + "\"" + rspAssertsStatus + "\"" + ","\
-	               + "randStr=" + "\"" + randStr + "\"" + ","\
-	               + "testRunId=" + "\"" + testRunId + "\"" + ","\
-	               + "req_execDateTime=" + "\"" + reqExecDateTime + "\"" + ","\
-	               + "rsp_timeTaken=" + "\"" + rspTimeTaken + "\"";
+if(appComponent.isEmpty() || appComponent == null) {
+	resultMetric = resultMetric.replace("app_comp=,", "");
+}
 
 log.info "resultMetric = " + resultMetric;
 

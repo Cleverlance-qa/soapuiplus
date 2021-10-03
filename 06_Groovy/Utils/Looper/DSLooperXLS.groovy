@@ -1,6 +1,5 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>                 					DSLooperXLS(CSV)
-//>                 					version 3.0.0
+//>                 					Looper - XLS version
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 import com.eviware.soapui.support.XmlHolder;
@@ -18,7 +17,7 @@ def DSPath_xls;
 def DSPath_csv;
 def DSPath2_xls;
 def DSPath2_csv;
-def debug_error = context.expand('${#Project#debug_error}');
+def debugMode = context.expand('${#Project#debugMode}');
 def DSPath_ctrl = "";
 def DSPath2_ctrl = "";
 
@@ -28,7 +27,7 @@ if (DS.startsWith("DS_envConfig")) {
 	// kontrola na pocet	
 	def path = (context.expand('${projectDir}') + "/01_DataSources/").replaceAll("\\\\","/");
 	def count = new File(path).listFiles().findAll { it.name ==~ /DS_envConfig.*/ }.size();
-	if (debug_error == "true"){
+	if (debugMode == "true"){
 		log.info "pocet stejnych 'DS_envConfig.*' = " + count;
 	}
 	if (count > 1) {
@@ -41,7 +40,7 @@ if (DS.startsWith("DS_envConfig")) {
 	} else {
 		
 		DSPath_control = ( projRoot + "/01_DataSources/" + DS + "." + DS_type ).replaceAll("\\\\","/");
-		if (debug_error == "true"){
+		if (debugMode == "true"){
 			log.info "DSPath_control = " + DSPath_control
 		}
 		
@@ -67,7 +66,7 @@ if (DS.startsWith("DS_envConfig")) {
 		}
 
 		testRunner.testCase.setPropertyValue("DSPath", DSPath);
-		if (debug_error == "true"){
+		if (debugMode == "true"){
 			log.info "DSPath (data input file) = " + DSPath;
 		}
 	}
@@ -77,7 +76,7 @@ else { // libovolny nazev data souboru
 	
 	// kontrola na pocet
 	def path = (context.expand('${projectDir}') + "/01_DataSources/").replaceAll("\\\\","/");
-		if (debug_error == "true") {
+		if (debugMode == "true") {
 		log.info "cesta k datovemu adresari = " + path;
 	}
 	
@@ -85,7 +84,7 @@ else { // libovolny nazev data souboru
 	def prefixPattern = "${prefix}*.*";
 	def count = new File(path).listFiles().findAll { it.name ==~ /${prefixPattern}/ }.size();
 	
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "pocet souboru '" + DS + "_" + env2test + "." + DS_type + "' = " + count;
 	}
 	
@@ -115,7 +114,7 @@ else { // libovolny nazev data souboru
 		// ulozena cesta pro data file
 		testRunner.testCase.setPropertyValue("DSPath", DSPath);
 		
-		if (debug_error == "true") {
+		if (debugMode == "true") {
 			log.info "DSPath (data input file pro testovaci prostredi '" + env2test + "') = " + DSPath;
 		}
 	}
@@ -126,7 +125,7 @@ else { // libovolny nazev data souboru
 
 if ( (DSPath_ctrl == "xls") || (DSPath2_ctrl == "xls") ) {
 	
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "XLS soubor !!!";
 	}
 	
@@ -134,12 +133,12 @@ if ( (DSPath_ctrl == "xls") || (DSPath2_ctrl == "xls") ) {
 	def Sheet sh = wb.getSheet(0);
 
 	def rowsCount= sh.getRows().toInteger();
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "rowsCount = " + rowsCount
 	}
 	
 	def colsCount = sh.getColumns().toInteger();
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "colsCount = " + colsCount;
 	}
 
@@ -153,17 +152,30 @@ if ( (DSPath_ctrl == "xls") || (DSPath2_ctrl == "xls") ) {
 		def inputProps = testRunner.testCase.getTestStepByName("InputProps");
 		def looperProps = testRunner.testCase.getTestStepByName("LooperProps");
 		looperProps.setPropertyValue("RowsCount", rowsCount.toString());
-		actualRow = looperProps.getPropertyValue("ActualRow").toString();
-		actualRow = actualRow.toInteger();
-	
+
+		def actualRow;
 		def nextRow;
-		if(actualRow > rowsCount-2 ) {
-			
+		def debugRowNumber;
+		def debugSingleRow = testRunner.testCase.testSuite.project.getPropertyValue("debugSingleRow")
+		
+		if (debugSingleRow.equals("true") && System.getenv("JENKINS_HOME") == null && !DS.contains("envConfig")){
+			evaluate(new File(context.expand(context.expand('${projectDir}') + "/06_Groovy/Utils/Dialogs/ChoiceInputDebugRowNumber.groovy").replaceAll("\\\\", "/")));
+			debugRowNumber = testRunner.testCase.getPropertyValue("debugRowNumber");
+			actualRow = debugRowNumber;
+			actualRow = actualRow.toInteger();
+			looperProps.setPropertyValue("ActualRow", debugRowNumber);
+		}
+		else {
+			actualRow = looperProps.getPropertyValue("ActualRow").toString();
+			actualRow = actualRow.toInteger();
+		}
+		if(actualRow > rowsCount-2 || debugSingleRow.equals("true") && System.getenv("JENKINS_HOME") == null && !DS.contains("envConfig")) {
+
 			nextRow = "1";
 			testRunner.testCase.setPropertyValue("nextRow", nextRow);
 		}
 		else {
-			
+
 			nextRow = actualRow + 1;
 			nextRow = nextRow.toString();
 			testRunner.testCase.setPropertyValue("nextRow", nextRow);
@@ -181,7 +193,7 @@ if ( (DSPath_ctrl == "xls") || (DSPath2_ctrl == "xls") ) {
 			Cell cell = sh.getCell(j, actualRow);
 			field = cell.getContents();
 			inputProps.setPropertyValue(header, field);
-			if (debug_error == "true"){ 
+			if (debugMode == "true"){ 
 				log.info("header = " + header + ",value = " + field);
 			}
 			i++
@@ -194,10 +206,12 @@ if ( (DSPath_ctrl == "xls") || (DSPath2_ctrl == "xls") ) {
 		log.info "DataSource = " + DS + ", actual row = ${(actualRow)} of ${(rowsCount)-1}";
 		log.info "*******************************************************************************************************************";	
 		looperProps.setPropertyValue("NextRow", nextRow.toString());
+		def pipelineEndpoint = context.expand('${#Global#pipelineEndpoint}');
 	
-		if (actualRow == rowsCount-1) {
-	
+		if (actualRow == rowsCount-1 || debugSingleRow.equals("true") && System.getenv("JENKINS_HOME") == null || !pipelineEnvironment.isEmpty() && DS.contains("envConfig")) {
+
 			looperProps.setPropertyValue("StopLoop", "StopLoop");
+		
 		}
 		else if (actualRow==0) {
 		
@@ -215,7 +229,7 @@ if ( (DSPath_ctrl == "xls") || (DSPath2_ctrl == "xls") ) {
 
 if ((DSPath_ctrl == "csv") || (DSPath2_ctrl == "csv")) {
 	
-	if (debug_error == "true") { 
+	if (debugMode == "true") { 
 		log.info " ******************************** ";
 		log.info "CSV soubor !!!"; 
 		log.info "DSPath = " + DSPath;
@@ -227,13 +241,13 @@ if ((DSPath_ctrl == "csv") || (DSPath2_ctrl == "csv")) {
 	
 	// header CSV
 	def fileHeaderLine = DSRows[0]
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "fileHeaderLine = " + fileHeaderLine;
 	}
 	
 	//log.info "DSContent = " + DSRows;
 	def size = DSRows.size.toInteger();
-	if (debug_error == "true") {
+	if (debugMode == "true") {
 		log.info "Pocet radku v souboru CSV = " + size;
 	}
 	if(size == 0) { 
@@ -265,24 +279,21 @@ if ((DSPath_ctrl == "csv") || (DSPath2_ctrl == "csv")) {
 		}
 		
 		nextRow = context.expand('${#TestCase#nextRow}');
-		//log.info "nextRow = " + nextRow;
 	
 		def inputProps = testRunner.testCase.getTestStepByName("InputProps");
 		
 		// header
 		def String[] items_header = fileHeaderLine.split(";");
-		if (debug_error == "true"){ log.info "items_header = " + items_header; }
+		if (debugMode == "true"){ log.info "items_header = " + items_header; }
 		
 		def valuesCount_header = items_header.length;
-		//log.info "valuesCount_header = " + valuesCount_header;
 
 		// obsah
 		def values = DSRows[actualRow].toString();
 		def String[] items = values.split(";");
-		if (debug_error == "true"){ log.info "items = " + items; }
+		if (debugMode == "true"){ log.info "items = " + items; }
 		
 		def valuesCount = items.length;
-		//log.info "valuesCount = " + valuesCount;
 
 		// values
 		int i = 1;
@@ -293,11 +304,9 @@ if ((DSPath_ctrl == "csv") || (DSPath2_ctrl == "csv")) {
 
 			// items
 			def value_items = values.split(";")[j];
-			//log.info "value_items = " + value_items;
 
-			//log.info "pro zapis = " + value_header + "," + value_items;
 			inputProps.setPropertyValue(value_header, value_items);
-			if (debug_error == "true") { 
+			if (debugMode == "true") { 
 				log.info("header = " + value_header + ",value = " + value_items);
 			}
 			i++
@@ -307,12 +316,12 @@ if ((DSPath_ctrl == "csv") || (DSPath2_ctrl == "csv")) {
 		nextRow++;
 		log.info "DataSource = " + DS + ", actual row = ${(actualRow+1)} of $DSRows.size"; // ****
 		log.info "*******************************************************************************************************************";	
-		//log.info "DS Row = ${(actualRow+1)} of $DSRows.size";
 	
 		looperProps.setPropertyValue("NextRow", nextRow.toString());
-		//log.info "Values from DSInput = " + values;
 	
-		if (actualRow==size-1) {
+		def pipelineEnvironment = context.expand('${#Global#pipelineEnvironment}');	
+
+		if (actualRow == rowsCount-1 || !pipelineEnvironment.isEmpty() && DS.contains("envConfig")) {
 		
 			looperProps.setPropertyValue("StopLoop", "StopLoop");
 		}

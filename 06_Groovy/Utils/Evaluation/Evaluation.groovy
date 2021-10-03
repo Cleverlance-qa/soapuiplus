@@ -1,6 +1,5 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>                 					Evaluation  
-//>										version 3.0.0                 
+//>                 					Evaluation
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 import org.apache.commons.io.FileUtils;
@@ -28,7 +27,7 @@ log.info "reqCorrelationId = " + reqCorrelationId;
 //create folder for req/rsp if not exist
 File directory = new File(projRoot + "/03_Requests_Responses/" + env2test);
 if (!directory.exists()) {
-
+	
 	directory.mkdir();	
 }
 
@@ -37,9 +36,13 @@ def response = context.expand( '${${#TestCase#stepName}#Response}' );
 //get random string as file unique identificator
 def randStr = org.apache.commons.lang.RandomStringUtils.random(10, true, true);
 testRunner.testCase.setPropertyValue("randStr", randStr);
+
 def rspStatusCode;
-def rspTimeTaken;
 def rspStatus;
+def result;
+def rspTimeTaken;
+
+
 try {
 	rspStatus = context.testCase.testSteps[stepName].testRequest.response.responseHeaders["#status#"];
 }
@@ -66,7 +69,7 @@ if (!response.isEmpty() || rspStatus != null) {
 	}
 
 	//get raw request/response and create as txt file
-	if( !rspStatusCode.startsWith(writeReqRsp)) {
+	if(!rspStatusCode.startsWith(writeReqRsp)) {
 		
 		//get time dateTime for req/rsp name prefix
 		def reqExecDateTimeForFileName = new java.text.SimpleDateFormat("yyyyMMdd_HHmmSS").format(new Date());
@@ -76,9 +79,6 @@ if (!response.isEmpty() || rspStatus != null) {
 		
 		//get call url and method
 		def method = context.testCase.testSteps[stepName].getHttpRequest().getMethod().toString();
-		// OLD
-		//def url = context.testCase.testSteps[stepName].getHttpRequest().getEndpoint().toString()
-		// NEW
 		def url=testRunner.testCase.testSteps[stepName].getHttpRequest().getResponse().getURL().toString();
 
 		//get request headers
@@ -91,6 +91,7 @@ if (!response.isEmpty() || rspStatus != null) {
 	
 		//get response headers
 		def responseHeaders = context.testCase.testSteps[stepName].testRequest.response.responseHeaders.toString();
+		
 		//get response
 		response = context.expand( '${${#TestCase#stepName}#Response}' );
 		if (!response.isEmpty()) {
@@ -121,8 +122,9 @@ if (!response.isEmpty() || rspStatus != null) {
 }
 else {
 
-	log.info "rspStatusCode is not available - set Timmed out";
-	testRunner.testCase.setPropertyValue("rspStatusCode", "TimedOut");
+	log.info "rspStatusCode is not available - set Timmed out -> 408";
+	rspStatusCode = "408"
+	testRunner.testCase.setPropertyValue("rspStatusCode", rspStatusCode);
 
 	//get time dateTime for req/rsp name prefix
 	def reqExecDateTimeForFileName = new java.text.SimpleDateFormat("yyyyMMdd_HHmmSS").format(new Date());
@@ -155,8 +157,16 @@ else {
 	def reqRspRawFile = new File(projRoot + "/03_Requests_Responses/" + env2test + "/" + stepName + "_req_rsp" + "(" + randStr + ").txt").write(reqRspRaw);
 }
 
+def rspAssertsStatus = "1";
+
 //check assertion status
-testRunner.testCase.setPropertyValue("rspAssertsStatus", "1");
+if(rspStatusCode.equals("408")) {
+	rspAssertsStatus = "-1"
+	testRunner.testCase.setPropertyValue("rspAssertsStatus", "-1");
+}
+else {
+	testRunner.testCase.setPropertyValue("rspAssertsStatus", "1");
+}
 
 obj = context.testCase.getTestStepByName(stepName);
 assertions = obj.getAssertionList();
@@ -168,45 +178,59 @@ assertions.each {
 	//assert status is failed or unknown set assert status as failed
 	if(status.startsWith("FAIL")) {
 	
-		log.info "ASSERTS FAILED";
+		rspAssertsStatus = "-1"
 		testRunner.testCase.setPropertyValue("rspAssertsStatus", "-1");
+		log.info "ASSERTS FAILED";
 	}
+}
+
+//set result
+if((rspStatusCode.startsWith("20") || rspStatusCode.startsWith ("30")) && rspAssertsStatus.equals("1")) {
+	
+	result = "1i";
+}
+else {
+	
+	result = "-1i";
 }
 
 //def metrics tags and fields 
 def metric = context.expand('${#Project#measurement}');
 def app = context.expand('${#Project#app}');
+def appComponent = context.expand('${#Project#appComponent}');
 def endpoint = context.expand('${${#TestCase#stepName}#Endpoint}');
-def String host = endpoint.split("/")[2];
+String host = endpoint.split("/")[2];
 def tcId = context.expand('${InputProps#tcId}');
 def tcName = context.expand('${InputProps#tcName}');
 def tcDesc = context.expand('${InputProps#tcDesc}');
 def testVariantId = context.expand('${InputProps#testVariantId}');
 def testVariantDesc = context.expand('${InputProps#testVariantDesc}');
-def rspAssertsStatus = context.expand('${#TestCase#rspAssertsStatus}');
 def testRunId = context.expand('${#Project#testRunId}');
 
-def String resultMetric;
-
-resultMetric = metric + "," \
-					+ "app=" + app + ","\
+String resultMetric = metric + "," \
 					+ "environment=" + env2test + ","\
 					+ "host=" + host + ","\
 					+ "endpoint=" + endpoint + ","\
+					+ "app=" + app + ","\
+					+ "app_comp=" + appComponent + ","\
 					+ "tc_id=" + tcId + ","\
 					+ "tc_name=" + tcName + ","\
 					+ "tc_desc=" + tcDesc + ","\
-					+ "test_varinat_id=" + testVariantId + ","\
-					+ "test_varinat_desc=" + testVariantDesc + ","\
+					+ "test_variant_id=" + testVariantId + ","\
+					+ "test_variant_desc=" + testVariantDesc + ","\
 					+ "test_step_name=" + stepName + " "\
-					+ "req_traceId=" + "\"" + reqCorrelationId + "\"" + ","\
+					+ "req_correlation_id=" + "\"" + reqCorrelationId + "\"" + ","\
 					+ "rsp_status_code=" + "\"" + rspStatusCode + "\"" + ","\
 					+ "rsp_asserts_status=" + "\"" + rspAssertsStatus + "\"" + ","\
+					+ "result=" + result + ","\
 					+ "rand_str=" + "\"" + randStr + "\"" + ","\
-					+ "testRunId=" + "\"" + testRunId + "\"" + ","\
-					+ "req_exec_datetime=" + "\"" + reqExecDateTime + "\"" + ","\
-					+ "rsp_timeTaken=" + "\"" + rspTimeTaken + "\"";
+					+ "test_run_id=" + "\"" + testRunId + "\"" + ","\
+					+ "req_exec_date_time=" + "\"" + reqExecDateTime + "\"" + ","\
+					+ "rsp_time_taken=" + "\"" + rspTimeTaken + "\"";
 
+if(appComponent.isEmpty() || appComponent == null) {
+	resultMetric = resultMetric.replace("app_comp=,", "");
+}
 
 log.info "resultMetric = " + resultMetric;
 
